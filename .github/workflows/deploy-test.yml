@@ -22,13 +22,13 @@ jobs:
       with:
         payload: |
           {
-            "text": "New release bridge-backend-service:${{ github.ref }} deployed to Testnet by ${{ github.actor }}",
+            "text": "New release bridge-backend-service:${{ github.ref_name }} deployed to Testnet by ${{ github.actor }}",
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "New release bridge-backend-service:${{ github.ref }} deployed to Testnet by ${{ github.actor }}"
+                  "text": "New release bridge-backend-service:${{ github.ref_name }} deployed to Testnet by ${{ github.actor }}"
                 }
               }
             ]
