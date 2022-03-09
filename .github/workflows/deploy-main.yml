@@ -18,7 +18,7 @@ jobs:
         rancher_key: ${{ secrets.RANCHER_SECRET_KEY }}
         project_id: 1a513
         stack_name: lachain-mainnet-backend-bridges-bridge-backend
-        service_name: bridge-balancer
+        service_name: bridge-backend
         docker_image: ghcr.io/${{ env.GITHUB_REPOSITORY_OWNER_PART_SLUG }}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_REF_SLUG_URL }}
     - name: Send release message to slack chat
       id: slack
