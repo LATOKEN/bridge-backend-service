@@ -225,6 +225,10 @@ func (w *Erc20Worker) GetBlockAndTxs(height int64) (*models.BlockAndTxLogs, erro
 
 	}
 
+	if height >= clientResp.Number.Int64() {
+		return nil, fmt.Errorf("not found")
+	}
+
 	logs, err := w.getLogs(height, clientResp.Number.Int64())
 	if err != nil {
 		w.logger.Errorf("while getEvents(block number from %d to %d), err = %v", height, clientResp.Number, err)
