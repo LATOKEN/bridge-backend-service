@@ -1,7 +1,9 @@
 package rlr
 
 import (
+	"encoding/hex"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/latoken/bridge-backend-service/src/service/storage"
@@ -47,6 +49,12 @@ func (r *BridgeSRV) sendExecuteProposal(worker workers.IWorker, event *storage.E
 			liquidity, _ := wor.GetLiquidityIndex(wor.GetConfig().AmTokenHandlerAddress, wor.GetConfig().AMUSDTContractAddr)
 			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
 				event.ReceiverAddr, event.OutAmount, liquidity)
+		} else if strings.Contains(r.storage.FetchResourceID(event.ResourceID).Name, "GasSwap") {
+			destinationResourceID, _ := hex.DecodeString(r.storage.FetchResourceIDByName("GasSwap" + event.OriginChainID).ID)
+			destinationChainID, _ := hex.DecodeString(event.OriginChainID)
+
+			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+				event.ReceiverAddr, event.OutAmount, append(destinationResourceID, destinationChainID...))
 		} else {
 			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
 				event.ReceiverAddr, event.OutAmount, nil)
