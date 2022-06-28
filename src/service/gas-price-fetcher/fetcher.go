@@ -108,6 +108,13 @@ func (f *FetcherSrv) getAllGasPrice() {
 				continue
 			}
 			gasPrices = append(gasPrices, gasPrice)
+		case "OP":
+			gasPrice, err := f.getOpGasPrice(cfg)
+			if err != nil {
+				logrus.Warnf("error fetching gas price for OP %s", err.Error())
+				continue
+			}
+			gasPrices = append(gasPrices, gasPrice)
 		default:
 			logrus.Warnf("Gas price getter not implemented for ", cfg.ChainName)
 		}
@@ -243,6 +250,10 @@ func (f *FetcherSrv) getOneGasPrice(cfg *models.FetcherConfig) (*storage.GasPric
 	}
 	var gasPrice = (*resp)["standard"].(float64)
 	return &storage.GasPrice{ChainName: "ONE", Price: fmt.Sprintf("%f", gasPrice), UpdateTime: time.Now().Unix()}, nil
+}
+
+func (f *FetcherSrv) getOpGasPrice(cfg *models.FetcherConfig) (*storage.GasPrice, error) {
+	return &storage.GasPrice{ChainName: "OP", Price: fmt.Sprintf("%f", 0.001), UpdateTime: time.Now().Unix()}, nil
 }
 
 // MakeReq HTTP request helper
