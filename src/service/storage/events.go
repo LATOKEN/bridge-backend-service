@@ -32,12 +32,10 @@ func (d *DataBase) GetEventsByTypeAndStatuses(statuses []EventStatus) []*Event {
 
 // UpdateEventStatus ...
 func (d *DataBase) UpdateEventStatus(event *Event, status EventStatus) {
-	toUpdate := map[string]interface{}{
-		"status":      status,
-		"update_time": time.Now().Unix(),
-	}
+	event.Status = status
+	event.UpdateTime = time.Now().Unix()
 
-	d.db.Model(Event{}).Where("swap_id = ?", event.SwapID).Update(toUpdate)
+	d.db.Model(Event{}).Where("swap_id = ?", event.SwapID).Update(event)
 }
 
 // CompensateNewEvent ...
@@ -102,11 +100,7 @@ func (d *DataBase) UpdateEventStatusWithTxStatus(txSent *TxSent, status TxStatus
 
 func (d *DataBase) UpdateParticularEventStatus(event Event, status EventStatus, inStatus EventStatus) error {
 	query := d.db.Model(Event{})
-	query = query.Where("swap_id = ?", event.SwapID)
-	query = query.Where("status = ?", inStatus)
-	toUpdate := map[string]interface{}{
-		"status":      status,
-		"update_time": time.Now().Unix(),
-	}
-	return query.Updates(toUpdate).Error
+	query = query.Where("swap_id = ? and status = ?", event.SwapID, inStatus)
+	event.Status = status
+	return query.Updates(event).Error
 }

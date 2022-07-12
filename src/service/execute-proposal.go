@@ -12,9 +12,9 @@ import (
 // emitRegistreted ...
 func (r *BridgeSRV) emitProposal(worker workers.IWorker) {
 	for {
-		events := r.storage.GetEventsByTypeAndStatuses([]storage.EventStatus{storage.EventStatusPassedInit, storage.EventStatusPassedConfirmed, storage.EventStatusPassedSentFailed})
+		events := r.storage.GetEventsByTypeAndStatuses([]storage.EventStatus{storage.EventStatusPassedInit, storage.EventStatusPassedInitConfrimed, storage.EventStatusPassedSentFailed})
 		for _, event := range events {
-			if event.Status == storage.EventStatusPassedConfirmed &&
+			if event.Status == storage.EventStatusPassedInitConfrimed &&
 				worker.GetDestinationID() == event.DestinationChainID { //send tx where dest chainID matches
 				r.logger.Infoln("attempting to send execute proposal")
 				if _, err := r.sendExecuteProposal(worker, event); err != nil {
@@ -22,7 +22,7 @@ func (r *BridgeSRV) emitProposal(worker workers.IWorker) {
 				}
 			} else {
 				r.handleTxSent(event.ChainID, event, storage.TxTypePassed,
-					storage.EventStatusPassedConfirmed, storage.EventStatusPassedFailed)
+					storage.EventStatusPassedInitConfrimed, storage.EventStatusPassedFailed)
 			}
 			time.Sleep(2 * time.Second)
 		}
