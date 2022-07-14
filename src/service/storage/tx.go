@@ -116,7 +116,7 @@ func (d *DataBase) CreateTxSent(txSent *TxSent) error {
 
 // UpdateTxSentStatus ...
 func (d *DataBase) UpdateTxSentStatus(txSent *TxSent, status TxStatus) error {
-	return d.db.Model(TxSent{}).Where("id = ?", txSent.ID).Update(
+	return d.db.Model(TxSent{}).Where("id = ? and swap_id = ?", txSent.ID, txSent.SwapID).Update(
 		map[string]interface{}{
 			"status":      status,
 			"update_time": time.Now().Unix(),
@@ -139,6 +139,5 @@ func (d *DataBase) GetTxsSentByType(chain string, txType TxType, event *Event) [
 	txsSent := make([]*TxSent, 0)
 	query := d.db.Where("swap_id = ? and type = ?", event.SwapID, txType)
 	query.Order("id desc").Find(&txsSent)
-
 	return txsSent
 }

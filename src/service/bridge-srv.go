@@ -171,22 +171,22 @@ func (r *BridgeSRV) handleTxSent(chain string, event *storage.Event, txType stor
 
 	if timeElapsed > autoRetryTimeout &&
 		(txStatus == storage.TxSentStatusNotFound ||
-			txStatus == storage.TxSentStatusInit ||
-			txStatus == storage.TxSentStatusPending) {
+			txStatus == storage.TxSentStatusInit || txStatus == storage.TxSentStatusFailed) {
 
 		if len(txsSent) >= autoRetryNum {
 			r.storage.UpdateEventStatus(event, failedStatus)
 		} else {
 			r.storage.UpdateEventStatus(event, backwardStatus)
 		}
-		r.storage.UpdateTxSentStatus(latestTx, storage.TxSentStatusLost)
-	} else if txStatus == storage.TxSentStatusFailed {
-		r.storage.UpdateEventStatus(event, failedStatus)
+		// r.storage.UpdateTxSentStatus(latestTx, storage.TxSentStatusLost)
 	}
+	// else if txStatus == storage.TxSentStatusFailed {
+	// 	r.storage.UpdateEventStatus(event, failedStatus)
+	// }
 }
 
 // !!! TODO !!!
 
 func (r *BridgeSRV) getAutoRetryConfig(chain string) (int64, int) {
-	return 10, 10
+	return 100, 10
 }
