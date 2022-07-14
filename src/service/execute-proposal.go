@@ -21,7 +21,7 @@ func (r *BridgeSRV) emitProposal(worker workers.IWorker) {
 					r.logger.Errorf("submit claim failed: %s", err)
 				}
 			} else {
-				r.handleTxSent(event.ChainID, event, storage.TxTypePassed,
+				r.handleTxSent(worker.GetChainName(), event, storage.TxTypePassed,
 					storage.EventStatusPassedInitConfrimed, storage.EventStatusPassedFailed)
 			}
 			time.Sleep(2 * time.Second)
