@@ -98,23 +98,22 @@ func (r *BridgeSRV) ConfirmWorkerTx(worker workers.IWorker) {
 			// 	!r.laWorker.IsSameAddress(txLog.WorkerChainAddr, r.laWorker.GetWorkerAddress()) {
 			// 	r.logger.Warnln("THE SAME")
 			// }
-			if txLog.TxType == storage.TxTypePassed {
-				r.logger.Infoln("New Event")
-				newEvent := &storage.Event{
-					ReceiverAddr:       txLog.ReceiverAddr,
-					DepositNonce:       txLog.DepositNonce,
-					ResourceID:         txLog.ResourceID,
-					ChainID:            txLog.Chain,
-					DestinationChainID: txLog.DestinationChainID,
-					OriginChainID:      txLog.OriginСhainID,
-					OutAmount:          txLog.OutAmount,
-					Height:             txLog.Height,
-					SwapID:             txLog.SwapID,
-					Status:             storage.EventStatusClaimConfirmed,
-					CreateTime:         time.Now().Unix(),
-				}
-				newEvents = append(newEvents, newEvent)
+			r.logger.Infoln("New Event")
+			newEvent := &storage.Event{
+				ReceiverAddr:       txLog.ReceiverAddr,
+				DepositNonce:       txLog.DepositNonce,
+				ResourceID:         txLog.ResourceID,
+				ChainID:            txLog.Chain,
+				DestinationChainID: txLog.DestinationChainID,
+				OriginChainID:      txLog.OriginChainID,
+				InAmount:           txLog.InAmount,
+				OutAmount:          txLog.OutAmount,
+				Height:             txLog.Height,
+				SwapID:             txLog.SwapID,
+				Status:             storage.EventStatusDepositConfirmed,
+				CreateTime:         time.Now().Unix(),
 			}
+			newEvents = append(newEvents, newEvent)
 			txHashes = append(txHashes, txLog.TxHash)
 		}
 
@@ -160,6 +159,7 @@ func (r *BridgeSRV) CheckTxSent(worker workers.IWorker) {
 func (r *BridgeSRV) handleTxSent(chain string, event *storage.Event, txType storage.TxType, backwardStatus storage.EventStatus,
 	failedStatus storage.EventStatus) {
 	txsSent := r.storage.GetTxsSentByType(chain, txType, event)
+
 	if len(txsSent) == 0 {
 		r.storage.UpdateEventStatus(event, backwardStatus)
 		return

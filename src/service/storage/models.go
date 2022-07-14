@@ -30,13 +30,14 @@ type TxLog struct {
 	CreateTime         int64  `gorm:"type:BIGINT"`
 	UpdateTime         int64  `gorm:"type:BIGINT"`
 	SwapID             string `gorm:"primaryKey"`
-	OriginСhainID      string `gorm:"type:TEXT"`
+	OriginChainID      string `gorm:"type:TEXT"`
 	DepositNonce       uint64 `gorm:"type:BIGINT"`
 	SwapStatus         uint8
 	ResourceID         string `gorm:"type:TEXT"`
 	ReceiverAddr       string `gorm:"type:TEXT"`
 	WorkerChainAddr    string `gorm:"type:TEXT"`
 	OutAmount          string `gorm:"type:TEXT"`
+	InAmount           string `gorm:"type:TEXT"`
 }
 
 // Registration
