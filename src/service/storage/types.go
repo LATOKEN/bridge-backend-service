@@ -26,6 +26,7 @@ const (
 type TxType string
 
 const (
+	TxTypeDeposit TxType = "DEPOSIT"
 	TxTypeClaim   TxType = "VOTE"
 	TxTypePassed  TxType = "PASSED"
 	TxTypeSpend   TxType = "SPEND"
@@ -45,6 +46,8 @@ const (
 	EventStatusPassedSentFailed    EventStatus = "PASSSED_SENT_FAILED"
 
 	EventStatusSpendConfirmed EventStatus = "SPEND_CONFIRMED"
+
+	EventStatusDepositConfirmed EventStatus = "DEPOSIT_CONFIRMED"
 
 	EventStatusClaimConfirmed EventStatus = "CLAIM_CONFIRM"
 

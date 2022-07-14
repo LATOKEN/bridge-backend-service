@@ -50,6 +50,11 @@ func (d *DataBase) ConfirmWorkerTx(chainID string, txLogs []*TxLog, txHashes []s
 				tx.Rollback()
 				return err
 			}
+		} else {
+			if err := tx.Model(Event{}).Where("swap_id = ?", swap.SwapID).Update(swap).Error; err != nil {
+				tx.Rollback()
+				return err
+			}
 		}
 	}
 
@@ -76,25 +81,25 @@ func (d *DataBase) ConfirmTx(tx *gorm.DB, txLog *TxLog) error {
 	switch txLog.TxType {
 	case TxTypeClaim:
 		if err := d.UpdateEventStatusWhenConfirmTx(tx, txLog, []EventStatus{
-			EventStatusClaimConfirmed},
+			EventStatusDepositConfirmed},
 			nil, EventStatusClaimConfirmed); err != nil {
 			return err
 		}
 	case TxTypePassed:
 		if err := d.UpdateEventStatusWhenConfirmTx(tx, txLog, []EventStatus{
-			EventStatusPassedFailed, EventStatusClaimConfirmed},
+			EventStatusPassedFailed, EventStatusClaimConfirmed, EventStatusDepositConfirmed},
 			[]EventStatus{EventStatusPassedInit, EventStatusPassedConfirmed}, EventStatusPassedInit); err != nil {
 			return err
 		}
 	case TxTypeSpend:
 		if err := d.UpdateEventStatusWhenConfirmTx(tx, txLog, []EventStatus{
-			EventStatusPassedConfirmed, EventStatusPassedSent, EventStatusPassedInit, EventStatusClaimConfirmed, EventStatusPassedFailed},
+			EventStatusDepositConfirmed, EventStatusPassedConfirmed, EventStatusPassedSent, EventStatusPassedInit, EventStatusClaimConfirmed, EventStatusPassedFailed},
 			nil, EventStatusSpendConfirmed); err != nil {
 			return err
 		}
 	case TxTypeExpired:
 		if err := d.UpdateEventStatusWhenConfirmTx(tx, txLog, []EventStatus{
-			EventStatusPassedConfirmed, EventStatusPassedSent, EventStatusPassedInit, EventStatusClaimConfirmed, EventStatusPassedFailed, EventStatusUpdateConfirmed, EventStatusUpdateFailed},
+			EventStatusDepositConfirmed, EventStatusPassedConfirmed, EventStatusPassedSent, EventStatusPassedInit, EventStatusClaimConfirmed, EventStatusPassedFailed, EventStatusUpdateConfirmed, EventStatusUpdateFailed},
 			nil, EventStatusExpiredConfirmed); err != nil {
 			return err
 		}
