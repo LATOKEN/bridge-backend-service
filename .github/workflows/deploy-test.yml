@@ -2,6 +2,7 @@ name: Deploy Testnet
 on: [workflow_dispatch]
 jobs:
   deploy:
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
