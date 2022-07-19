@@ -188,5 +188,5 @@ func (r *BridgeSRV) handleTxSent(chain string, event *storage.Event, txType stor
 // !!! TODO !!!
 
 func (r *BridgeSRV) getAutoRetryConfig(chain string) (int64, int) {
-	return 100, 10
+	return 100, 1
 }
