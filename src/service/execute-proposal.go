@@ -22,7 +22,7 @@ func (r *BridgeSRV) emitProposal(worker workers.IWorker) {
 				}
 			} else {
 				r.handleTxSent(worker.GetChainName(), event, storage.TxTypePassed,
-					storage.EventStatusPassedInitConfrimed, storage.EventStatusPassedFailed)
+					storage.EventStatusPassedInitConfrimed, storage.EventStatusPassedFailed, storage.EventStatusPassedConfirmed)
 			}
 			time.Sleep(2 * time.Second)
 		}

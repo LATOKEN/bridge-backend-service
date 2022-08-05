@@ -325,6 +325,9 @@ func (w *Erc20Worker) GetHeight() (int64, error) {
 
 // GetSentTxStatus ...
 func (w *Erc20Worker) GetSentTxStatus(hash string) storage.TxStatus {
+	if hash == "" {
+		return storage.TxSentStatusLost
+	}
 	txReceipt, err := w.client.TransactionReceipt(context.Background(), common.HexToHash(hash))
 	if err != nil {
 		return storage.TxSentStatusNotFound

@@ -157,7 +157,7 @@ func (r *BridgeSRV) CheckTxSent(worker workers.IWorker) {
 }
 
 func (r *BridgeSRV) handleTxSent(chain string, event *storage.Event, txType storage.TxType, backwardStatus storage.EventStatus,
-	failedStatus storage.EventStatus) {
+	failedStatus storage.EventStatus, successStatus storage.EventStatus) {
 	txsSent := r.storage.GetTxsSentByType(chain, txType, event)
 
 	if len(txsSent) == 0 {
@@ -169,6 +169,10 @@ func (r *BridgeSRV) handleTxSent(chain string, event *storage.Event, txType stor
 	autoRetryTimeout, autoRetryNum := r.getAutoRetryConfig(chain)
 	txStatus := latestTx.Status
 
+	if txStatus == storage.TxSentStatusSuccess {
+		r.storage.UpdateEventStatus(event, successStatus)
+		return
+	}
 	if timeElapsed > autoRetryTimeout &&
 		(txStatus == storage.TxSentStatusNotFound ||
 			txStatus == storage.TxSentStatusInit || txStatus == storage.TxSentStatusFailed) {
