@@ -161,9 +161,11 @@ func (f *FetcherSrv) getPosGasPrice(cfg *models.FetcherConfig) (*storage.GasPric
 	if err != nil {
 		logrus.Warnf("fetch POS gas price error = %s", err)
 		return &storage.GasPrice{}, err
+	} else if resp != nil {
+		var gasPrice = (*resp)["fast"].(float64)
+		return &storage.GasPrice{ChainName: "POS", Price: fmt.Sprintf("%f", gasPrice), UpdateTime: time.Now().Unix()}, nil
 	}
-	var gasPrice = (*resp)["fast"].(float64)
-	return &storage.GasPrice{ChainName: "POS", Price: fmt.Sprintf("%f", gasPrice), UpdateTime: time.Now().Unix()}, nil
+	return &storage.GasPrice{}, fmt.Errorf("Wrong gas price fetched for POS")
 }
 
 func (f *FetcherSrv) getAvaxGasPrice(cfg *models.FetcherConfig) (*storage.GasPrice, error) {
