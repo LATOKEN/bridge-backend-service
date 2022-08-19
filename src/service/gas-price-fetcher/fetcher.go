@@ -44,80 +44,14 @@ func (f *FetcherSrv) getAllGasPrice() {
 	gasPrices := make([]*storage.GasPrice, 0, len(f.chainFetCfgs))
 
 	for _, cfg := range f.chainFetCfgs {
-		switch cfg.ChainName {
-		case "BSC":
-			gasPrice, err := f.getGasPrice(cfg, "BSC")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for BSC %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "ETH":
-			gasPrice, err := f.getGasPrice(cfg, "ETH")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for ETH %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "POS":
-			gasPrice, err := f.getGasPrice(cfg, "POS")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for POS %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "AVAX":
-			gasPrice, err := f.getGasPrice(cfg, "AVAX")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for AVAX %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "FTM":
-			gasPrice, err := f.getGasPrice(cfg, "FTM")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for FTM %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "CRO":
-			gasPrice, err := f.getGasPrice(cfg, "CRO")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for CRO %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "ARB":
-			gasPrice, err := f.getGasPrice(cfg, "ARB")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for ARB %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "HT":
-			gasPrice, err := f.getGasPrice(cfg, "HT")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for HT %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "ONE":
-			gasPrice, err := f.getGasPrice(cfg, "ONE")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for ONE %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		case "OP":
-			gasPrice, err := f.getGasPrice(cfg, "OP")
-			if err != nil {
-				f.logger.Warnf("error fetching gas price for OP %s", err.Error())
-				continue
-			}
-			gasPrices = append(gasPrices, gasPrice)
-		default:
-			f.logger.Warnf("Gas price getter not implemented for ", cfg.ChainName)
+
+		gasPrice, err := f.getGasPrice(cfg, cfg.ChainName)
+		if err != nil {
+			f.logger.Warnf("error fetching gas price for BSC %s", err.Error())
+			continue
 		}
+		gasPrices = append(gasPrices, gasPrice)
+
 	}
 
 	f.storage.SaveGasPriceInfo(gasPrices)
@@ -135,42 +69,48 @@ func stringInSlice(a string, list []string) bool {
 
 func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*storage.GasPrice, error) {
 
-	var gasPrice float64
+	var gasPrice = 0.0
+
+	f.logger.Infoln("chainName:: ", chainName)
 
 	if chainName == "BSC" {
 		gasPrice = 20.0
-		return &storage.GasPrice{ChainName: chainName, Price: fmt.Sprintf("%f", gasPrice), UpdateTime: time.Now().Unix()}, nil
 	} else if chainName == "OP" {
 		gasPrice = 0.001
-		return &storage.GasPrice{ChainName: chainName, Price: fmt.Sprintf("%f", gasPrice), UpdateTime: time.Now().Unix()}, nil
+	} else {
+		httpClient := &http.Client{
+			Timeout: time.Second * 10,
+		}
+
+		resp, err := f.makeReq(cfg.URL, httpClient)
+
+		if err != nil {
+			f.logger.Warnf("fetch %s gas price error = %s", chainName, err)
+			return &storage.GasPrice{}, err
+		} else if resp == nil {
+			return &storage.GasPrice{}, fmt.Errorf("Wrong gas price fetched for POS")
+		}
+
+		if stringInSlice(chainName, []string{"ETH"}) {
+			gasPrice = (*resp)["average"].(float64) / 10
+
+		} else if stringInSlice(chainName, []string{"POS"}) {
+			gasPrice = (*resp)["fast"].(float64)
+
+		} else if stringInSlice(chainName, []string{"AVAX", "FTM", "HT", "CRO", "ARB"}) {
+			gasPrice = (*resp)["data"].(map[string]interface{})["normal"].(map[string]interface{})["price"].(float64) / 1000000000
+
+		} else if stringInSlice(chainName, []string{"ONE"}) {
+			gasPrice = (*resp)["standard"].(float64)
+		} else if stringInSlice(chainName, []string{"OP"}) {
+			gasPrice = 0.001
+		}
 	}
 
-	httpClient := &http.Client{
-		Timeout: time.Second * 10,
-	}
+	f.logger.Println("gasPrice: ", gasPrice)
 
-	resp, err := f.makeReq(cfg.URL, httpClient)
-
-	if err != nil {
-		f.logger.Warnf("fetch %s gas price error = %s", chainName, err)
-		return &storage.GasPrice{}, err
-	} else if resp == nil {
-		return &storage.GasPrice{}, fmt.Errorf("Wrong gas price fetched for POS")
-	}
-
-	if stringInSlice(chainName, []string{"ETH"}) {
-		gasPrice = (*resp)["average"].(float64) / 10
-
-	} else if stringInSlice(chainName, []string{"POS"}) {
-		gasPrice = (*resp)["fast"].(float64)
-
-	} else if stringInSlice(chainName, []string{"AVAX", "FTM", "HT", "CRO", "ARB"}) {
-		gasPrice = (*resp)["data"].(map[string]interface{})["normal"].(map[string]interface{})["price"].(float64) / 1000000000
-
-	} else if stringInSlice(chainName, []string{"ONE"}) {
-		gasPrice = (*resp)["standard"].(float64)
-	} else if stringInSlice(chainName, []string{"OP"}) {
-		gasPrice = 0.001
+	if gasPrice == 0.0 {
+		return &storage.GasPrice{}, fmt.Errorf("Gas price getter not implemented for this chain")
 	}
 
 	return &storage.GasPrice{ChainName: chainName, Price: fmt.Sprintf("%f", gasPrice), UpdateTime: time.Now().Unix()}, nil
