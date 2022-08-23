@@ -47,7 +47,7 @@ func (f *FetcherSrv) getAllGasPrice() {
 
 		gasPrice, err := f.getGasPrice(cfg, cfg.ChainName)
 		if err != nil {
-			f.logger.Warnf("error fetching gas price for BSC %s", err.Error())
+			f.logger.Warnf("error fetching gas price for %s %s", cfg.ChainName, err.Error())
 			continue
 		}
 		gasPrices = append(gasPrices, gasPrice)
