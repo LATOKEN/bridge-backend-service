@@ -82,7 +82,7 @@ func (d *DataBase) ConfirmTx(tx *gorm.DB, txLog *TxLog) error {
 	case TxTypeClaim:
 		if err := d.UpdateEventStatusWhenConfirmTx(tx, txLog, []EventStatus{
 			EventStatusDepositConfirmed},
-			[]EventStatus{EventStatusPassedConfirmed, EventStatusPassedFailed, EventStatusExpiredConfirmed, EventStatusSpendConfirmed}, EventStatusClaimConfirmed); err != nil {
+			[]EventStatus{EventStatusPassedInit, EventStatusPassedConfirmed, EventStatusPassedFailed, EventStatusPassedSent, EventStatusPassedSentFailed, EventStatusExpiredConfirmed, EventStatusSpendConfirmed}, EventStatusClaimConfirmed); err != nil {
 			return err
 		}
 	case TxTypePassed:
