@@ -83,12 +83,12 @@ func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*
 		}
 
 		resp, err := f.makeReq(cfg.URL, httpClient)
-
+		resp = nil
 		if err != nil {
 			f.logger.Warnf("fetch %s gas price error = %s", chainName, err)
 			return &storage.GasPrice{}, err
 		} else if resp == nil {
-			return &storage.GasPrice{}, fmt.Errorf("Wrong gas price fetched for POS")
+			return &storage.GasPrice{}, fmt.Errorf("Fetched empty response for %s", chainName)
 		}
 
 		if stringInSlice(chainName, []string{"ETH"}) {
@@ -110,7 +110,7 @@ func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*
 	f.logger.Println("gasPrice: ", gasPrice)
 
 	if gasPrice == 0.0 {
-		return &storage.GasPrice{}, fmt.Errorf("Gas price getter not implemented for this chain")
+		return &storage.GasPrice{}, fmt.Errorf("Gas price getter not implemented for %s chain", chainName)
 	}
 
 	return &storage.GasPrice{ChainName: chainName, Price: fmt.Sprintf("%f", gasPrice), UpdateTime: time.Now().Unix()}, nil
