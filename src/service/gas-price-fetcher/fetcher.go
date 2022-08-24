@@ -83,7 +83,6 @@ func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*
 		}
 
 		resp, err := f.makeReq(cfg.URL, httpClient)
-		resp = nil
 		if err != nil {
 			f.logger.Warnf("fetch %s gas price error = %s", chainName, err)
 			return &storage.GasPrice{}, err
