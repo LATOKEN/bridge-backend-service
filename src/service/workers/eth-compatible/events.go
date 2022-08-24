@@ -39,7 +39,6 @@ type ProposalEvent struct {
 	DepositNonce       uint64
 	Status             uint8
 	ResourceID         [32]byte
-	DataHash           [32]byte
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
@@ -52,7 +51,7 @@ type DepositEvent struct {
 	RecipientAddress   common.Address
 	TokenAddress       common.Address
 	Amount             *big.Int
-	DataHash           [32]byte
+	Params             [32]byte
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
@@ -94,7 +93,6 @@ func ParseLAProposalEvent(abi *abi.ABI, log *types.Log) (ContractEvent, error) {
 	fmt.Printf("INFO[%s] status: %d\n", event_time, ev.Status)
 	fmt.Printf("INFO[%s] resource ID: 0x%s\n", event_time, common.Bytes2Hex(ev.ResourceID[:]))
 	fmt.Printf("INFO[%s] recipient: 0x%s\n", event_time, common.Bytes2Hex(ev.RecipientAddress[:]))
-	fmt.Printf("INFO[%s] DataHash: 0x%s\n", event_time, common.Bytes2Hex(ev.DataHash[:]))
 	fmt.Printf("INFO[%s] amount: %s\n\n", event_time, ev.Amount.String())
 
 	setTxMonitor(SwapID, ev.Status)
@@ -119,7 +117,7 @@ func ParseLaDepositEvent(log *types.Log) (ContractEvent, error) {
 	fmt.Printf("[%s] recipient address: %s\n", SwapID, ev.RecipientAddress.Hex())
 	fmt.Printf("[%s] token address: %s\n", SwapID, ev.TokenAddress.Hex())
 	fmt.Printf("[%s] amount : %s\n", SwapID, ev.Amount.String())
-	fmt.Printf("[%s] DataHASH : %s\n", SwapID, common.Bytes2Hex(ev.DataHash[:]))
+	fmt.Printf("[%s] Params : %s\n", SwapID, common.Bytes2Hex(ev.Params[:]))
 
 	return ev, nil
 }
@@ -145,7 +143,7 @@ func ParseEthDepositEvent(log *types.Log) (ContractEvent, error) {
 	fmt.Printf("[%s] recipient address: %s\n", SwapID, ev.RecipientAddress.Hex())
 	fmt.Printf("[%s] token address: %s\n", SwapID, ev.TokenAddress.Hex())
 	fmt.Printf("[%s] amount : %s\n", SwapID, ev.Amount.String())
-	fmt.Printf("[%s] DataHASH : %s\n", SwapID, common.Bytes2Hex(ev.DataHash[:]))
+	fmt.Printf("[%s] Params : %s\n", SwapID, common.Bytes2Hex(ev.Params[:]))
 
 	return ev, nil
 }
