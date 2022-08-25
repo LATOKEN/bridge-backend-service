@@ -35,7 +35,7 @@ type IWorker interface {
 	// IsSameAddress returns is addrA the same with addrB
 	IsSameAddress(addrA string, addrB string) bool
 	//Executes Swap on ETH based chains
-	ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string) (string, error)
+	ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, error)
 	//Executes Swap on Lachain
 	ExecuteProposalLa(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, error)
 	//to get Liquidity Index for aave tokens

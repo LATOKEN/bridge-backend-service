@@ -67,7 +67,7 @@ type Event struct {
 	UpdateTime         int64
 	DepositNonce       uint64
 	ResourceID         string
-	TxType             string
+	Params             string
 }
 
 // TxSent ...

@@ -112,6 +112,7 @@ func (r *BridgeSRV) ConfirmWorkerTx(worker workers.IWorker) {
 				SwapID:             txLog.SwapID,
 				Status:             storage.EventStatusDepositConfirmed,
 				CreateTime:         time.Now().Unix(),
+				Params:             txLog.Params,
 			}
 			newEvents = append(newEvents, newEvent)
 			txHashes = append(txHashes, txLog.TxHash)

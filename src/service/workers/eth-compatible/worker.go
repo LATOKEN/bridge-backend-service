@@ -131,7 +131,7 @@ func (w *Erc20Worker) getCallOpts() *bind.CallOpts {
 	}
 }
 
-func (w *Erc20Worker) ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string) (string, error) {
+func (w *Erc20Worker) ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, error) {
 	auth, err := w.getTransactor()
 	if err != nil {
 		return "", err
@@ -142,7 +142,7 @@ func (w *Erc20Worker) ExecuteProposalEth(depositNonce uint64, originChainID [8]b
 		return "", err
 	}
 	value, _ := new(big.Int).SetString(amount, 10)
-	tx, err := instance.ExecuteProposal(auth, originChainID, destinationChainID, depositNonce, resourceID, common.HexToAddress(receiptAddr), value, nil)
+	tx, err := instance.ExecuteProposal(auth, originChainID, destinationChainID, depositNonce, resourceID, common.HexToAddress(receiptAddr), value, bytes)
 	if err != nil {
 		return "", err
 	}
