@@ -38,6 +38,7 @@ type TxLog struct {
 	WorkerChainAddr    string `gorm:"type:TEXT"`
 	OutAmount          string `gorm:"type:TEXT"`
 	InAmount           string `gorm:"type:TEXT"`
+	Params             string `gorm:"type:TEXT"`
 }
 
 // Registration
