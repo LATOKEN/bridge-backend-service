@@ -101,7 +101,7 @@ func (w *Erc20Worker) GetChainID() string {
 	return fmt.Sprint(w.chainID)
 }
 
-//returns destinationChainID to be checked to execute proposal
+// returns destinationChainID to be checked to execute proposal
 func (w *Erc20Worker) GetDestinationID() string {
 	return w.destinationChainID
 }
@@ -326,7 +326,7 @@ func (w *Erc20Worker) GetHeight() (int64, error) {
 // GetSentTxStatus ...
 func (w *Erc20Worker) GetSentTxStatus(hash string) storage.TxStatus {
 	if hash == "" {
-		return storage.TxSentStatusLost
+		return storage.TxSentStatusFailed
 	}
 	txReceipt, err := w.client.TransactionReceipt(context.Background(), common.HexToHash(hash))
 	if err != nil {

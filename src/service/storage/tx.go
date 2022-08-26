@@ -51,6 +51,7 @@ func (d *DataBase) ConfirmWorkerTx(chainID string, txLogs []*TxLog, txHashes []s
 				return err
 			}
 		} else {
+			swap.Status = previousSwap.Status
 			if err := tx.Model(Event{}).Where("swap_id = ?", swap.SwapID).Update(swap).Error; err != nil {
 				tx.Rollback()
 				return err
