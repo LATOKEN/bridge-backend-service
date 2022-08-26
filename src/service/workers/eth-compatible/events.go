@@ -178,7 +178,7 @@ func (ev ProposalEvent) ToTxLog(chain string) *storage.TxLog {
 		txlog.EventStatus = storage.EventStatusPassedInit
 	} else if ev.Status == uint8(3) {
 		txlog.TxType = storage.TxTypeSpend
-		txlog.EventStatus = storage.EventStatusPassedConfirmed
+		txlog.EventStatus = storage.EventStatusSpendConfirmed
 	} else if ev.Status == uint8(4) {
 		txlog.TxType = storage.TxTypeExpired
 		txlog.EventStatus = storage.EventStatusExpiredConfirmed
