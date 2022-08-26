@@ -110,7 +110,7 @@ func (r *BridgeSRV) ConfirmWorkerTx(worker workers.IWorker) {
 				OutAmount:          txLog.OutAmount,
 				Height:             txLog.Height,
 				SwapID:             txLog.SwapID,
-				Status:             storage.EventStatusDepositConfirmed,
+				Status:             txLog.EventStatus,
 				CreateTime:         time.Now().Unix(),
 			}
 			newEvents = append(newEvents, newEvent)
@@ -147,10 +147,6 @@ func (r *BridgeSRV) CheckTxSent(worker workers.IWorker) {
 		status := worker.GetSentTxStatus(txSent.TxHash)
 		if err := r.storage.UpdateTxSentStatus(txSent, status); err != nil {
 			r.logger.WithFields(logrus.Fields{"function": "CheckTxSent() | UpdateTxSentStatus()"}).Errorln(err)
-			return
-		}
-		if err := r.storage.UpdateEventStatusWithTxStatus(txSent, status, txSent.Type); err != nil {
-			r.logger.WithFields(logrus.Fields{"function": "UpdateEventStatusWithTxStatus() | UpdateTxSentStatus()"}).Errorln(err)
 			return
 		}
 	}
