@@ -24,8 +24,8 @@ const (
 
 // Event Hash (SHA3)
 var (
-	ProposalEventHash = common.HexToHash("0x9686dcabd0450cad86a88df15a9d35b08b35d1b08a19008df37cf8538c467516")
-	DepositEventHash  = common.HexToHash("0x370525803ffa9a7c0e6adb3868e393dca45d8b42b2f62fd1f23ecfe99f6ce8fc")
+	ProposalEventHash = common.HexToHash("0x98515ff66d46eef043e6e17beb65b19f71802dc829ff974ca92d66d61019286d")
+	DepositEventHash  = common.HexToHash("0x3cdf0bc4e2723a2132944314ba37022e8f01ee627cbbc3c834065f80f8b2b04f")
 )
 
 var txStatus = make(map[string]uint8)
