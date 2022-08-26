@@ -110,7 +110,7 @@ func (r *BridgeSRV) ConfirmWorkerTx(worker workers.IWorker) {
 				OutAmount:          txLog.OutAmount,
 				Height:             txLog.Height,
 				SwapID:             txLog.SwapID,
-				Status:             storage.EventStatusDepositConfirmed,
+				Status:             txLog.EventStatus,
 				CreateTime:         time.Now().Unix(),
 			}
 			newEvents = append(newEvents, newEvent)
@@ -149,10 +149,6 @@ func (r *BridgeSRV) CheckTxSent(worker workers.IWorker) {
 			r.logger.WithFields(logrus.Fields{"function": "CheckTxSent() | UpdateTxSentStatus()"}).Errorln(err)
 			return
 		}
-		if err := r.storage.UpdateEventStatusWithTxStatus(txSent, status, txSent.Type); err != nil {
-			r.logger.WithFields(logrus.Fields{"function": "UpdateEventStatusWithTxStatus() | UpdateTxSentStatus()"}).Errorln(err)
-			return
-		}
 	}
 }
 
@@ -182,7 +178,7 @@ func (r *BridgeSRV) handleTxSent(chain string, event *storage.Event, txType stor
 		} else {
 			r.storage.UpdateEventStatus(event, backwardStatus)
 		}
-		// r.storage.UpdateTxSentStatus(latestTx, storage.TxSentStatusLost)
+		r.storage.UpdateTxSentStatus(latestTx, storage.TxSentStatusLost)
 	}
 	// else if txStatus == storage.TxSentStatusFailed {
 	// 	r.storage.UpdateEventStatus(event, failedStatus)
@@ -192,5 +188,5 @@ func (r *BridgeSRV) handleTxSent(chain string, event *storage.Event, txType stor
 // !!! TODO !!!
 
 func (r *BridgeSRV) getAutoRetryConfig(chain string) (int64, int) {
-	return 100, 1
+	return 600, 1
 }
