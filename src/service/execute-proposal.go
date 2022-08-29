@@ -48,13 +48,21 @@ func (r *BridgeSRV) sendExecuteProposal(worker workers.IWorker, event *storage.E
 			liquidity, _ := wor.GetLiquidityIndex(wor.GetConfig().AmTokenHandlerAddress, wor.GetConfig().AMUSDTContractAddr)
 			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
 				event.ReceiverAddr, event.OutAmount, liquidity)
+		} else if utils.CheckGasSwap(event.ResourceID) {
+			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+				event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
 		} else {
 			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
 				event.ReceiverAddr, event.OutAmount, nil)
 		}
 	} else {
-		txHash, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
-			event.ReceiverAddr, event.OutAmount)
+		if utils.CheckGasSwap(event.ResourceID) {
+			txHash, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+				event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
+		} else {
+			txHash, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+				event.ReceiverAddr, event.OutAmount, nil)
+		}
 	}
 	if err != nil {
 		txSent.ErrMsg = err.Error()
