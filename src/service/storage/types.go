@@ -22,7 +22,6 @@ const (
 
 // !!! TODO !!!
 
-//
 type TxType string
 
 const (

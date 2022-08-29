@@ -12,7 +12,7 @@ import (
 // emitRegistreted ...
 func (r *BridgeSRV) emitProposal(worker workers.IWorker) {
 	for {
-		events := r.storage.GetEventsByTypeAndStatuses([]storage.EventStatus{storage.EventStatusPassedInit, storage.EventStatusPassedInitConfrimed, storage.EventStatusPassedSentFailed})
+		events := r.storage.GetEventsByTypeAndStatuses([]storage.EventStatus{storage.EventStatusPassedInit, storage.EventStatusPassedInitConfrimed, storage.EventStatusPassedSentFailed, storage.EventStatusPassedSent})
 		for _, event := range events {
 			if event.Status == storage.EventStatusPassedInitConfrimed &&
 				worker.GetDestinationID() == event.DestinationChainID { //send tx where dest chainID matches

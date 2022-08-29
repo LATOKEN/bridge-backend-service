@@ -55,7 +55,7 @@ type DepositEvent struct {
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
-//monitors swap status till 5 mins then throw error
+// monitors swap status till 5 mins then throw error
 func setTxMonitor(SwapID string, Status uint8) {
 	if Status == 1 {
 		txStatus[SwapID] = Status
@@ -168,14 +168,18 @@ func (ev ProposalEvent) ToTxLog(chain string) *storage.TxLog {
 		DepositNonce:       ev.DepositNonce,
 		SwapStatus:         ev.Status,
 		ResourceID:         common.Bytes2Hex(ev.ResourceID[:]),
+		EventStatus:        storage.EventStatusClaimConfirmed,
 	}
 
 	if ev.Status == uint8(2) {
 		txlog.TxType = storage.TxTypePassed
+		txlog.EventStatus = storage.EventStatusPassedInit
 	} else if ev.Status == uint8(3) {
 		txlog.TxType = storage.TxTypeSpend
+		txlog.EventStatus = storage.EventStatusSpendConfirmed
 	} else if ev.Status == uint8(4) {
 		txlog.TxType = storage.TxTypeExpired
+		txlog.EventStatus = storage.EventStatusExpiredConfirmed
 	}
 
 	return txlog
@@ -195,6 +199,7 @@ func (ev DepositEvent) ToTxLog(chain string) *storage.TxLog {
 		ReceiverAddr:       ev.RecipientAddress.Hex(),
 		InAmount:           ev.Amount.String(),
 		Params:             common.Bytes2Hex(ev.Params[:]),
+
 	}
 }
 
