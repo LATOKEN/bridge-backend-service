@@ -51,7 +51,7 @@ type DepositEvent struct {
 	RecipientAddress   common.Address
 	TokenAddress       common.Address
 	Amount             *big.Int
-	Params             [32]byte
+	Params             []byte
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
