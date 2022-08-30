@@ -36,7 +36,6 @@ func (w *WatcherSRV) Run() {
 			w.logger.Fatalf("err = %v", err)
 			return
 		}
-		println(startHeight)
 		go w.collector(worker, worker.GetFetchInterval(), startHeight)
 		time.Sleep(100 * time.Millisecond)
 	}
