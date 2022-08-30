@@ -108,9 +108,9 @@ func (w *Erc20Worker) GetDestinationID() string {
 
 // GetStartHeight returns start blockchain height from config
 func (w *Erc20Worker) GetStartHeight() (int64, error) {
-	if w.config.StartBlockHeight == 0 {
-		return w.GetHeight()
-	}
+	// if w.config.StartBlockHeight == 0 {
+	// 	return w.GetHeight()
+	// }
 	return w.config.StartBlockHeight, nil
 }
 

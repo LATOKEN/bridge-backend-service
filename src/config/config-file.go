@@ -16,7 +16,7 @@ func (v *viperConfig) ReadServiceConfig() string {
 	return fmt.Sprintf("%s:%s", v.GetString("service.host"), v.GetString("service.port"))
 }
 
-//reads ethereum chain apis to fetch gas price
+// reads ethereum chain apis to fetch gas price
 func (v *viperConfig) ReadFetcherConfig() []*models.FetcherConfig {
 	chains := v.GetStringSlice("chains")
 	chainFetCgfs := make([]*models.FetcherConfig, 0)

@@ -199,7 +199,6 @@ func (ev DepositEvent) ToTxLog(chain string) *storage.TxLog {
 		ReceiverAddr:       ev.RecipientAddress.Hex(),
 		InAmount:           ev.Amount.String(),
 		Params:             common.Bytes2Hex(ev.Params[:]),
-
 	}
 }
 
