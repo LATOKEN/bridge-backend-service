@@ -190,6 +190,7 @@ func (ev DepositEvent) ToTxLog(chain string) *storage.TxLog {
 	return &storage.TxLog{
 		Chain:              chain,
 		TxType:             storage.TxTypeDeposit,
+		EventStatus:        storage.EventStatusDepositConfirmed,
 		DestinationChainID: common.Bytes2Hex(ev.DestinationChainID[:]),
 		OriginChainID:      common.Bytes2Hex(ev.OriginChainID[:]),
 		SwapID:             utils.CalcutateSwapID(common.Bytes2Hex(ev.OriginChainID[:]), common.Bytes2Hex(ev.DestinationChainID[:]), fmt.Sprint(ev.DepositNonce)),
