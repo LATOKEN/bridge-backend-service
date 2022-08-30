@@ -232,6 +232,8 @@ func (w *Erc20Worker) GetBlockAndTxs(height int64) (*models.BlockAndTxLogs, erro
 		return nil, err
 	}
 
+	defer client.Close()
+
 	clientResp, err := client.HeaderByNumber(context.Background(), nil)
 	if err != nil {
 		w.logger.Errorln("Error while fetching the block header = ", err)
@@ -248,8 +250,6 @@ func (w *Erc20Worker) GetBlockAndTxs(height int64) (*models.BlockAndTxLogs, erro
 		w.logger.Errorf("while getEvents(block number from %d to %d), err = %v", height, clientResp.Number, err)
 		return nil, err
 	}
-
-	client.Close()
 
 	return &models.BlockAndTxLogs{
 		Height:          clientResp.Number.Int64(),
