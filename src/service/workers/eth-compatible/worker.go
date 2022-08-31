@@ -78,8 +78,6 @@ func NewErc20Worker(logger *logrus.Logger, cfg *models.WorkerConfig, db *storage
 		panic(fmt.Sprintf("rpc not returning chain id for %s", cfg.ChainName))
 	}
 
-	defer client.Close()
-
 	// init token addresses
 	return &Erc20Worker{
 		chainName:          cfg.ChainName,
