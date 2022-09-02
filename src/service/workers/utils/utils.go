@@ -76,9 +76,7 @@ func BytesToBytes8(b []byte) [8]byte {
 }
 
 func StringToBytes(b string) []byte {
-	var byteArr []byte
-	copy(byteArr[:], common.Hex2Bytes(b))
-	return byteArr
+	return common.Hex2Bytes(b)
 }
 
 func CalcutateSwapID(originChainID, destChainID, nonce string) string {
