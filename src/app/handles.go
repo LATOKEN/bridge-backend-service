@@ -44,11 +44,21 @@ func (a *App) StatusHandler(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) GasPriceHandler(w http.ResponseWriter, r *http.Request) {
 	msg := mux.Vars(r)["chain"]
+	v := r.URL.Query().Get("v")
 
 	if msg == "" {
 		a.logger.Errorf("Empty request(gas-price/{chain})")
 		common.ResponJSON(w, http.StatusInternalServerError, createNewError("empty request", ""))
 		return
+	}
+
+	if v == "2" {
+		for _, worker := range a.relayer.Workers {
+			if worker.GetChainID() == msg {
+				msg = worker.GetChainName()
+				break
+			}
+		}
 	}
 	gasPrice := a.relayer.GetGasPrice(msg)
 	common.ResponJSON(w, http.StatusOK, gasPrice)
