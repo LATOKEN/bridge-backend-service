@@ -73,9 +73,7 @@ func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*
 
 	f.logger.Infoln("chainName:: ", chainName)
 
-	if chainName == "BSC" {
-		gasPrice = 20.0
-	} else if chainName == "OP" {
+	if chainName == "OP" {
 		gasPrice = 0.001
 	} else {
 		httpClient := &http.Client{
@@ -99,7 +97,7 @@ func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*
 		} else if stringInSlice(chainName, []string{"AVAX", "FTM", "HT", "CRO", "ARB"}) {
 			gasPrice = (*resp)["data"].(map[string]interface{})["normal"].(map[string]interface{})["price"].(float64) / 1000000000
 
-		} else if stringInSlice(chainName, []string{"ONE"}) {
+		} else if stringInSlice(chainName, []string{"ONE", "BSC"}) {
 			gasPrice = (*resp)["standard"].(float64)
 		} else if stringInSlice(chainName, []string{"OP"}) {
 			gasPrice = 0.001
