@@ -94,10 +94,7 @@ func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*
 		if stringInSlice(chainName, []string{"POS"}) {
 			gasPrice = (*resp)["fast"].(float64)
 
-		} else if stringInSlice(chainName, []string{"AVAX", "FTM", "HT", "CRO", "ARB", "ETH"}) {
-			gasPrice = (*resp)["data"].(map[string]interface{})["normal"].(map[string]interface{})["price"].(float64) / 1000000000
-
-		} else if stringInSlice(chainName, []string{"ONE", "BSC"}) {
+		} else if stringInSlice(chainName, []string{"ONE", "BSC", "AVAX", "FTM", "HT", "CRO", "ARB", "ETH"}) {
 			gasPrice = (*resp)["standard"].(float64)
 		} else if stringInSlice(chainName, []string{"OP"}) {
 			gasPrice = 0.001
