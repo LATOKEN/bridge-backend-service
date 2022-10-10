@@ -12,14 +12,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-//FetcherSrv
+// FetcherSrv
 type FetcherSrv struct {
 	logger       *logrus.Entry
 	storage      *storage.DataBase
 	chainFetCfgs []*models.FetcherConfig
 }
 
-//CreateFetcherSrv
+// CreateFetcherSrv
 func CreateFetcherSrv(logger *logrus.Logger, db *storage.DataBase, chainFetCfgs []*models.FetcherConfig) *FetcherSrv {
 	return &FetcherSrv{
 		logger:       logger.WithField("layer", "fetcher"),
@@ -88,13 +88,13 @@ func (f *FetcherSrv) getGasPrice(cfg *models.FetcherConfig, chainName string) (*
 			return &storage.GasPrice{}, fmt.Errorf("Fetched empty response for %s", chainName)
 		}
 
-		if stringInSlice(chainName, []string{"ETH"}) {
-			gasPrice = (*resp)["average"].(float64) / 10
+		// if stringInSlice(chainName, []string{"ETH"}) {
+		// 	gasPrice = (*resp)["average"].(float64) / 10
 
-		} else if stringInSlice(chainName, []string{"POS"}) {
+		if stringInSlice(chainName, []string{"POS"}) {
 			gasPrice = (*resp)["fast"].(float64)
 
-		} else if stringInSlice(chainName, []string{"AVAX", "FTM", "HT", "CRO", "ARB"}) {
+		} else if stringInSlice(chainName, []string{"AVAX", "FTM", "HT", "CRO", "ARB", "ETH"}) {
 			gasPrice = (*resp)["data"].(map[string]interface{})["normal"].(map[string]interface{})["price"].(float64) / 1000000000
 
 		} else if stringInSlice(chainName, []string{"ONE", "BSC"}) {
