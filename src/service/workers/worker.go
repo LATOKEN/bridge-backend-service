@@ -30,14 +30,14 @@ type IWorker interface {
 	GetGasPrice() float64
 	GetConfig() *models.WorkerConfig
 	// gets tx status from chain
-	GetSentTxStatus(hash string) storage.TxStatus
+	GetSentTxStatus(hash string, nonce string) storage.TxStatus
 	GetStatus() (*models.WorkerStatus, error)
 	// IsSameAddress returns is addrA the same with addrB
 	IsSameAddress(addrA string, addrB string) bool
 	//Executes Swap on ETH based chains
-	ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, error)
+	ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, string, error)
 	//Executes Swap on Lachain
-	ExecuteProposalLa(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, error)
+	ExecuteProposalLa(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, string, error)
 	//to get Liquidity Index for aave tokens
 	GetLiquidityIndex(handlerAddress, usdtAddress common.Address) ([]byte, error)
 	//updates withdraw swap status on lachain
