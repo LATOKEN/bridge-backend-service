@@ -41,7 +41,7 @@ type IWorker interface {
 	//to get Liquidity Index for aave tokens
 	GetLiquidityIndex(handlerAddress, usdtAddress common.Address) ([]byte, error)
 	//updates withdraw swap status on lachain
-	UpdateSwapStatusOnChain(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, outAmount, inAmount *big.Int, bytes []byte, status uint8) (string, error)
+	UpdateSwapStatusOnChain(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, outAmount, inAmount *big.Int, bytes []byte, status uint8) (string, string, error)
 	//gets decimals from token address by taking resource id
 	GetDecimalsFromResourceID(resourceID string) (uint8, error)
 }
