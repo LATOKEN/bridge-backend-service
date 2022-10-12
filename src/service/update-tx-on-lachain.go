@@ -69,7 +69,7 @@ func (b *BridgeSRV) SendConfirmationLA(event *storage.Event) (string, error) {
 	inAmount, _ := new(big.Int).SetString(event.InAmount, 10)
 	outAmount, _ := new(big.Int).SetString(event.OutAmount, 10)
 
-	txHash, err := b.laWorker.UpdateSwapStatusOnChain(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID), event.ReceiverAddr, outAmount, inAmount, liquidity, status)
+	txHash, nonce, err := b.laWorker.UpdateSwapStatusOnChain(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID), event.ReceiverAddr, outAmount, inAmount, liquidity, status)
 	if err != nil {
 		txSent.ErrMsg = err.Error()
 		txSent.Status = storage.TxSentStatusFailed
@@ -78,6 +78,7 @@ func (b *BridgeSRV) SendConfirmationLA(event *storage.Event) (string, error) {
 		return "", err
 	}
 	txSent.TxHash = txHash
+	txSent.Nonce = nonce
 	b.logger.Infof("Update status tx success: %s", txHash)
 	b.storage.UpdateEventStatus(event, storage.EventStatusUpdateConfirmed)
 	b.storage.CreateTxSent(txSent)
