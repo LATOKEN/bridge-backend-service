@@ -44,27 +44,11 @@ func (r *BridgeSRV) sendExecuteProposal(worker workers.IWorker, event *storage.E
 
 	var nonce uint64
 	if worker.GetChainName() == "LA" {
-		// to update liquidity index inside lachain for aave tokens
-		if event.ResourceID == r.storage.FetchResourceIDByName("amToken").ID {
-			wor := r.Workers["POS"]
-			liquidity, _ := wor.GetLiquidityIndex(wor.GetConfig().AmTokenHandlerAddress, wor.GetConfig().AMUSDTContractAddr)
-			txHash, nonce, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
-				event.ReceiverAddr, event.OutAmount, liquidity)
-		} else if utils.CheckGasSwap(event.ResourceID) {
-			txHash, nonce, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
-				event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
-		} else {
-			txHash, nonce, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
-				event.ReceiverAddr, event.OutAmount, nil)
-		}
+		txHash, nonce, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+			event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
 	} else {
-		if utils.CheckGasSwap(event.ResourceID) {
-			txHash, nonce, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
-				event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
-		} else {
-			txHash, nonce, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
-				event.ReceiverAddr, event.OutAmount, nil)
-		}
+		txHash, nonce, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+			event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
 	}
 	if err != nil {
 		txSent.ErrMsg = err.Error()

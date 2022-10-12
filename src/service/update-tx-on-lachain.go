@@ -51,12 +51,6 @@ func (b *BridgeSRV) SendConfirmationLA(event *storage.Event) (string, error) {
 	b.logger.Infof("Update status parameters:  depositNonce(%d) | sender(%s) | outAmount(%s) | resourceID(%s) | inAmount(%s) \n",
 		event.DepositNonce, event.ReceiverAddr, event.OutAmount, event.ResourceID, event.InAmount)
 
-	//required to update liquidity index for amTokens
-	if event.ResourceID == b.storage.FetchResourceIDByName("amToken").ID {
-		wor := b.Workers["POS"]
-		liquidity, _ = wor.GetLiquidityIndex(wor.GetConfig().AmTokenHandlerAddress, wor.GetConfig().AMUSDTContractAddr)
-	}
-
 	if event.InAmount == "" || event.OutAmount == "" {
 		err := fmt.Errorf("Error in finding amounts")
 		txSent.ErrMsg = err.Error()
