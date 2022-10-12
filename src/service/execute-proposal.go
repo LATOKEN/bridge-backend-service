@@ -42,7 +42,7 @@ func (r *BridgeSRV) sendExecuteProposal(worker workers.IWorker, event *storage.E
 	r.logger.Infof("Execute parameters:  depositNonce(%d) | sender(%s) | outAmount(%s) | resourceID(%s) | chainID(%s)\n",
 		event.DepositNonce, event.ReceiverAddr, event.OutAmount, event.ResourceID, worker.GetChainName())
 
-	var nonce string
+	var nonce uint64
 	if worker.GetChainName() == "LA" {
 		// to update liquidity index inside lachain for aave tokens
 		if event.ResourceID == r.storage.FetchResourceIDByName("amToken").ID {
