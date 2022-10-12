@@ -79,7 +79,7 @@ type TxSent struct {
 	TxHash     string   `json:"tx_hash" gorm:"type:TEXT"`
 	ErrMsg     string   `json:"err_msg" gorm:"type:TEXT"`
 	Status     TxStatus `json:"status" gorm:"type:tx_statuses"`
-	Nonce      uint64   `json:"nonce" gorm:"type:UINT"`
+	Nonce      uint64   `json:"nonce" gorm:"type:BIGINT"`
 	CreateTime int64    `json:"create_time" gorm:"type:BIGINT"`
 	UpdateTime int64    `json:"update_time" gorm:"type:BIGINT"`
 }
