@@ -32,7 +32,6 @@ func (b *BridgeSRV) SendConfirmationLA(event *storage.Event) (string, error) {
 		SwapID:     event.SwapID,
 		CreateTime: time.Now().Unix(),
 	}
-	var liquidity []byte
 	var status uint8 = 3
 	if event.Status == storage.EventStatusPassedFailed {
 		status = 4
@@ -63,7 +62,8 @@ func (b *BridgeSRV) SendConfirmationLA(event *storage.Event) (string, error) {
 	inAmount, _ := new(big.Int).SetString(event.InAmount, 10)
 	outAmount, _ := new(big.Int).SetString(event.OutAmount, 10)
 
-	txHash, nonce, err := b.laWorker.UpdateSwapStatusOnChain(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID), event.ReceiverAddr, outAmount, inAmount, liquidity, status)
+	txHash, nonce, err := b.laWorker.UpdateSwapStatusOnChain(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+		event.ReceiverAddr, outAmount, inAmount, utils.StringToBytes(event.Params), status)
 	if err != nil {
 		txSent.ErrMsg = err.Error()
 		txSent.Status = storage.TxSentStatusFailed
