@@ -18,6 +18,7 @@ func (a *App) Endpoints(w http.ResponseWriter, r *http.Request) {
 		Endpoints: []string{
 			"/status",
 			"/gas-price/{chain}",
+			"/tx-sent/{tx_hash}",
 		},
 	}
 
@@ -62,4 +63,22 @@ func (a *App) GasPriceHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	gasPrice := a.relayer.GetGasPrice(msg)
 	common.ResponJSON(w, http.StatusOK, gasPrice)
+}
+
+// TxSentHandler ...
+func (a *App) TxSentHandler(w http.ResponseWriter, r *http.Request) {
+	txHash := mux.Vars(r)["tx_hash"]
+	if txHash == "" {
+		a.logger.Errorf("Empty request(/tx-sent/{tx_hash})")
+		common.ResponJSON(w, http.StatusInternalServerError, createNewError("empty request", ""))
+		return
+	}
+
+	txSent, err := a.relayer.GetTxSent(txHash)
+	if err != nil {
+		common.ResponJSON(w, http.StatusNotFound, createNewError("get tx sent from database", err.Error()))
+		return
+	}
+
+	common.ResponJSON(w, http.StatusOK, txSent)
 }

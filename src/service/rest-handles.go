@@ -25,6 +25,16 @@ func (r *BridgeSRV) StatusOfWorkers() (map[string]*models.WorkerStatus, error) {
 	return workers, nil
 }
 
+func (r *BridgeSRV) GetTxSent(txHash string) (string, error) {
+	txSent, err := r.storage.GetTxSentByTxHash(txHash)
+	if err != nil {
+		r.logger.Errorf("GetTxSent, txHash: %v, failed with error: %v", txHash, err)
+		return "", err
+	}
+
+	return txSent, nil
+}
+
 // CreateNewBindRequest ...
 func (r *BridgeSRV) CreateNewBindRequest() {}
 

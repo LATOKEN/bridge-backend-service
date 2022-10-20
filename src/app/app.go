@@ -58,6 +58,7 @@ func (a *App) setRouters() {
 	a.Get("/", a.Endpoints)
 	a.Get("/status", a.StatusHandler)
 	a.Get("/gas-price/{chain}", a.GasPriceHandler)
+	a.Get("/tx-sent/{tx_hash}", a.TxSentHandler)
 	// a.Get("/resend_tx/{id}", a.ResendTxHandler)
 	// a.Get("/set_mode/{mode}", a.SetModeHandler)
 }
