@@ -153,3 +153,20 @@ func (d *DataBase) GetTxsSentByType(chain string, txType TxType, event *Event) [
 	query.Order("id desc").Find(&txsSent)
 	return txsSent
 }
+
+// GetTxSentByTxHash ...
+func (d *DataBase) GetTxSentByTxHash(txHash string) (string, error) {
+	txLog := &TxLog{}
+	if err := d.db.Model(TxLog{}).Where("tx_hash = ? and tx_type = ?", txHash, TxTypeDeposit).
+		Find(&txLog).Error; err != nil {
+		return "", err
+	}
+
+	txSent := &TxSent{}
+	if err := d.db.Model(TxSent{}).Where("swap_id = ? and type = ?", txLog.SwapID, TxTypePassed).
+		Find(&txSent).Error; err != nil {
+		return "", err
+	}
+
+	return txSent.TxHash, nil
+}
