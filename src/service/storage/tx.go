@@ -163,7 +163,7 @@ func (d *DataBase) GetTxSentByTxHash(txHash string) (string, error) {
 	}
 
 	txSent := &TxSent{}
-	if err := d.db.Model(TxSent{}).Where("swap_id = ?", txLog.SwapID).
+	if err := d.db.Model(TxSent{}).Where("chain = ? and swap_id = ?", txLog.Chain, txLog.SwapID).
 		Find(&txSent).Error; err != nil {
 		return "", err
 	}
