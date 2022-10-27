@@ -38,12 +38,12 @@ func main() {
 	}
 	logger.SetLevel(level)
 
-	os.MkdirAll("./logs", os.ModePerm)
-	logFile, err := os.OpenFile("./logs/backend.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
-	if err != nil {
-		fmt.Printf("error opening file: %v", err)
-	}
-	logger.SetOutput(logFile)
+	// os.MkdirAll("./logs", os.ModePerm)
+	// logFile, err := os.OpenFile("./logs/backend.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+	// if err != nil {
+	// 	fmt.Printf("error opening file: %v", err)
+	// }
+	// logger.SetOutput(logFile)
 
 	// Set connection to onlife_business database
 	db, err := gorm.Open(dbConfig.DBDriver, dbURL)
