@@ -24,8 +24,8 @@ const (
 
 // Event Hash (SHA3)
 var (
-	ProposalEventHash = common.HexToHash("0x9686dcabd0450cad86a88df15a9d35b08b35d1b08a19008df37cf8538c467516")
-	DepositEventHash  = common.HexToHash("0x370525803ffa9a7c0e6adb3868e393dca45d8b42b2f62fd1f23ecfe99f6ce8fc")
+	ProposalEventHash = common.HexToHash("0x98515ff66d46eef043e6e17beb65b19f71802dc829ff974ca92d66d61019286d")
+	DepositEventHash  = common.HexToHash("0x3cdf0bc4e2723a2132944314ba37022e8f01ee627cbbc3c834065f80f8b2b04f")
 )
 
 var txStatus = make(map[string]uint8)
@@ -39,7 +39,6 @@ type ProposalEvent struct {
 	DepositNonce       uint64
 	Status             uint8
 	ResourceID         [32]byte
-	DataHash           [32]byte
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
@@ -52,7 +51,7 @@ type DepositEvent struct {
 	RecipientAddress   common.Address
 	TokenAddress       common.Address
 	Amount             *big.Int
-	DataHash           [32]byte
+	Params             []byte
 	Raw                types.Log // Blockchain specific contextual infos
 }
 
@@ -94,7 +93,6 @@ func ParseLAProposalEvent(abi *abi.ABI, log *types.Log) (ContractEvent, error) {
 	fmt.Printf("INFO[%s] status: %d\n", event_time, ev.Status)
 	fmt.Printf("INFO[%s] resource ID: 0x%s\n", event_time, common.Bytes2Hex(ev.ResourceID[:]))
 	fmt.Printf("INFO[%s] recipient: 0x%s\n", event_time, common.Bytes2Hex(ev.RecipientAddress[:]))
-	fmt.Printf("INFO[%s] DataHash: 0x%s\n", event_time, common.Bytes2Hex(ev.DataHash[:]))
 	fmt.Printf("INFO[%s] amount: %s\n\n", event_time, ev.Amount.String())
 
 	setTxMonitor(SwapID, ev.Status)
@@ -119,7 +117,7 @@ func ParseLaDepositEvent(log *types.Log) (ContractEvent, error) {
 	fmt.Printf("[%s] recipient address: %s\n", SwapID, ev.RecipientAddress.Hex())
 	fmt.Printf("[%s] token address: %s\n", SwapID, ev.TokenAddress.Hex())
 	fmt.Printf("[%s] amount : %s\n", SwapID, ev.Amount.String())
-	fmt.Printf("[%s] DataHASH : %s\n", SwapID, common.Bytes2Hex(ev.DataHash[:]))
+	fmt.Printf("[%s] Params : %s\n", SwapID, common.Bytes2Hex(ev.Params[:]))
 
 	return ev, nil
 }
@@ -145,7 +143,7 @@ func ParseEthDepositEvent(log *types.Log) (ContractEvent, error) {
 	fmt.Printf("[%s] recipient address: %s\n", SwapID, ev.RecipientAddress.Hex())
 	fmt.Printf("[%s] token address: %s\n", SwapID, ev.TokenAddress.Hex())
 	fmt.Printf("[%s] amount : %s\n", SwapID, ev.Amount.String())
-	fmt.Printf("[%s] DataHASH : %s\n", SwapID, common.Bytes2Hex(ev.DataHash[:]))
+	fmt.Printf("[%s] Params : %s\n", SwapID, common.Bytes2Hex(ev.Params[:]))
 
 	return ev, nil
 }
@@ -192,6 +190,7 @@ func (ev DepositEvent) ToTxLog(chain string) *storage.TxLog {
 	return &storage.TxLog{
 		Chain:              chain,
 		TxType:             storage.TxTypeDeposit,
+		EventStatus:        storage.EventStatusDepositConfirmed,
 		DestinationChainID: common.Bytes2Hex(ev.DestinationChainID[:]),
 		OriginChainID:      common.Bytes2Hex(ev.OriginChainID[:]),
 		SwapID:             utils.CalcutateSwapID(common.Bytes2Hex(ev.OriginChainID[:]), common.Bytes2Hex(ev.DestinationChainID[:]), fmt.Sprint(ev.DepositNonce)),
@@ -200,7 +199,7 @@ func (ev DepositEvent) ToTxLog(chain string) *storage.TxLog {
 		SenderAddr:         ev.Depositor.Hex(),
 		ReceiverAddr:       ev.RecipientAddress.Hex(),
 		InAmount:           ev.Amount.String(),
-		EventStatus:        storage.EventStatusDepositConfirmed,
+		Params:             common.Bytes2Hex(ev.Params[:]),
 	}
 }
 

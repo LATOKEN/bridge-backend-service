@@ -8,6 +8,8 @@ import (
 
 	"github.com/latoken/bridge-backend-service/src/models"
 
+	"encoding/hex"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
@@ -73,6 +75,10 @@ func BytesToBytes8(b []byte) [8]byte {
 	return byteArr
 }
 
+func StringToBytes(b string) []byte {
+	return common.Hex2Bytes(b)
+}
+
 func CalcutateSwapID(originChainID, destChainID, nonce string) string {
 	return originChainID + destChainID + nonce
 }
@@ -100,4 +106,13 @@ func ConvertDecimalsForInput(originDecimals, destDecimals uint8, amount string) 
 	amountInFloat, _ := new(big.Int).SetString(amount, 10)
 	// conversion := new(big.Int).Quo(origin, dest)
 	return new(big.Int).Quo(new(big.Int).Mul(amountInFloat, origin), dest)
+}
+
+func CheckGasSwap(resourceID string) bool {
+	swapIdentifier := hex.EncodeToString([]byte("swap"))
+	if resourceID[:8] == swapIdentifier {
+		return true
+	} else {
+		return false
+	}
 }

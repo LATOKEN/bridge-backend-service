@@ -38,6 +38,7 @@ type TxLog struct {
 	WorkerChainAddr    string `gorm:"type:TEXT"`
 	OutAmount          string `gorm:"type:TEXT"`
 	InAmount           string `gorm:"type:TEXT"`
+	Params             string `gorm:"type:TEXT"`
 }
 
 // Registration
@@ -66,7 +67,7 @@ type Event struct {
 	UpdateTime         int64
 	DepositNonce       uint64
 	ResourceID         string
-	TxType             string
+	Params             string
 }
 
 // TxSent ...
@@ -78,6 +79,7 @@ type TxSent struct {
 	TxHash     string   `json:"tx_hash" gorm:"type:TEXT"`
 	ErrMsg     string   `json:"err_msg" gorm:"type:TEXT"`
 	Status     TxStatus `json:"status" gorm:"type:tx_statuses"`
+	Nonce      uint64   `json:"nonce" gorm:"type:BIGINT"`
 	CreateTime int64    `json:"create_time" gorm:"type:BIGINT"`
 	UpdateTime int64    `json:"update_time" gorm:"type:BIGINT"`
 }

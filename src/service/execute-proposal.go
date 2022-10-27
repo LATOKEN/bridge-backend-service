@@ -41,20 +41,30 @@ func (r *BridgeSRV) sendExecuteProposal(worker workers.IWorker, event *storage.E
 
 	r.logger.Infof("Execute parameters:  depositNonce(%d) | sender(%s) | outAmount(%s) | resourceID(%s) | chainID(%s)\n",
 		event.DepositNonce, event.ReceiverAddr, event.OutAmount, event.ResourceID, worker.GetChainName())
+
+	var nonce uint64
 	if worker.GetChainName() == "LA" {
 		// to update liquidity index inside lachain for aave tokens
 		if event.ResourceID == r.storage.FetchResourceIDByName("amToken").ID {
 			wor := r.Workers["POS"]
 			liquidity, _ := wor.GetLiquidityIndex(wor.GetConfig().AmTokenHandlerAddress, wor.GetConfig().AMUSDTContractAddr)
-			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+			txHash, nonce, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
 				event.ReceiverAddr, event.OutAmount, liquidity)
+		} else if utils.CheckGasSwap(event.ResourceID) {
+			txHash, nonce, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+				event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
 		} else {
-			txHash, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+			txHash, nonce, err = worker.ExecuteProposalLa(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
 				event.ReceiverAddr, event.OutAmount, nil)
 		}
 	} else {
-		txHash, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
-			event.ReceiverAddr, event.OutAmount)
+		if utils.CheckGasSwap(event.ResourceID) {
+			txHash, nonce, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+				event.ReceiverAddr, event.OutAmount, utils.StringToBytes(event.Params))
+		} else {
+			txHash, nonce, err = worker.ExecuteProposalEth(event.DepositNonce, utils.StringToBytes8(event.OriginChainID), utils.StringToBytes8(event.DestinationChainID), utils.StringToBytes32(event.ResourceID),
+				event.ReceiverAddr, event.OutAmount, nil)
+		}
 	}
 	if err != nil {
 		txSent.ErrMsg = err.Error()
@@ -64,6 +74,7 @@ func (r *BridgeSRV) sendExecuteProposal(worker workers.IWorker, event *storage.E
 		return "", fmt.Errorf("could not send claim tx: %w", err)
 	}
 	txSent.TxHash = txHash
+	txSent.Nonce = nonce
 	r.storage.UpdateEventStatus(event, storage.EventStatusPassedSent)
 	r.logger.Infof("send execute proposal tx success | chain=%s, tx_hash=%s", worker.GetChainName(), txSent.TxHash)
 	// create new tx(claimed)

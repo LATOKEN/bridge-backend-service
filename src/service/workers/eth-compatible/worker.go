@@ -132,60 +132,60 @@ func (w *Erc20Worker) getCallOpts() *bind.CallOpts {
 	}
 }
 
-func (w *Erc20Worker) ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string) (string, error) {
+func (w *Erc20Worker) ExecuteProposalEth(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, uint64, error) {
 	auth, err := w.getTransactor()
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 
 	instance, err := ethBr.NewEthBr(w.contractAddr, w.client)
 	if err != nil {
-		return "", err
-	}
-	value, _ := new(big.Int).SetString(amount, 10)
-	tx, err := instance.ExecuteProposal(auth, originChainID, destinationChainID, depositNonce, resourceID, common.HexToAddress(receiptAddr), value, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return tx.Hash().String(), nil
-}
-
-func (w *Erc20Worker) ExecuteProposalLa(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, error) {
-	auth, err := w.getTransactor()
-	if err != nil {
-		return "", err
-	}
-
-	instance, err := laBr.NewLaBr(w.contractAddr, w.client)
-	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 	value, _ := new(big.Int).SetString(amount, 10)
 	tx, err := instance.ExecuteProposal(auth, originChainID, destinationChainID, depositNonce, resourceID, common.HexToAddress(receiptAddr), value, bytes)
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 
-	return tx.Hash().String(), nil
+	return tx.Hash().String(), auth.Nonce.Uint64(), nil
 }
 
-func (w *Erc20Worker) UpdateSwapStatusOnChain(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, outAmount, inAmount *big.Int, bytes []byte, status uint8) (string, error) {
+func (w *Erc20Worker) ExecuteProposalLa(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, amount string, bytes []byte) (string, uint64, error) {
 	auth, err := w.getTransactor()
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 
 	instance, err := laBr.NewLaBr(w.contractAddr, w.client)
 	if err != nil {
-		return "", err
+		return "", 0, err
+	}
+	value, _ := new(big.Int).SetString(amount, 10)
+	tx, err := instance.ExecuteProposal(auth, originChainID, destinationChainID, depositNonce, resourceID, common.HexToAddress(receiptAddr), value, bytes)
+	if err != nil {
+		return "", 0, err
+	}
+
+	return tx.Hash().String(), auth.Nonce.Uint64(), nil
+}
+
+func (w *Erc20Worker) UpdateSwapStatusOnChain(depositNonce uint64, originChainID [8]byte, destinationChainID [8]byte, resourceID [32]byte, receiptAddr string, outAmount, inAmount *big.Int, bytes []byte, status uint8) (string, uint64, error) {
+	auth, err := w.getTransactor()
+	if err != nil {
+		return "", 0, err
+	}
+
+	instance, err := laBr.NewLaBr(w.contractAddr, w.client)
+	if err != nil {
+		return "", 0, err
 	}
 
 	tx, err := instance.UpdateExternalTx(auth, originChainID, destinationChainID, depositNonce, resourceID, common.HexToAddress(receiptAddr), outAmount, inAmount, bytes, status)
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
-	return tx.Hash().String(), nil
+	return tx.Hash().String(), auth.Nonce.Uint64(), nil
 }
 
 func (w *Erc20Worker) GetLiquidityIndex(handlerAddress, amUsdtAddress common.Address) ([]byte, error) {
@@ -318,20 +318,28 @@ func (w *Erc20Worker) GetHeight() (int64, error) {
 }
 
 // GetSentTxStatus ...
-func (w *Erc20Worker) GetSentTxStatus(hash string) storage.TxStatus {
+func (w *Erc20Worker) GetSentTxStatus(hash string, nonce uint64) storage.TxStatus {
 	if hash == "" {
 		return storage.TxSentStatusFailed
 	}
 	txReceipt, err := w.client.TransactionReceipt(context.Background(), common.HexToHash(hash))
 	if err != nil {
-		_, isPending, err := w.client.TransactionByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			// if err == ethereum.NotFound {
-			// 	return storage.TxSentStatusLost
-			// }
+		if nonce == 0 {
+			_, isPending, err := w.client.TransactionByHash(context.Background(), common.HexToHash(hash))
+			if err != nil {
+				// if err == ethereum.NotFound {
+				// 	return storage.TxSentStatusLost
+				// }
+				return storage.TxSentStatusNotFound
+			}
+			if isPending {
+				return storage.TxSentStatusPending
+			}
 			return storage.TxSentStatusNotFound
 		}
-		if isPending {
+
+		txCount, _ := w.GetTxCountLatest()
+		if nonce >= txCount {
 			return storage.TxSentStatusPending
 		}
 		return storage.TxSentStatusNotFound
