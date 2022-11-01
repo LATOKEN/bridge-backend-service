@@ -44,9 +44,12 @@ func (d *DataBase) SaveBlockAndTxs(chain string, blockLog *BlockLog, txLogs []*T
 
 	for _, txLog := range txLogs {
 		txLog.CreateTime = time.Now().Unix()
-		if err := tx.Create(txLog).Error; err != nil {
-			tx.Rollback()
-			return err
+		var previousLog TxLog
+		if err := d.db.Model(TxLog{}).Where("swap_id = ? and tx_type = ?", txLog.SwapID, txLog.TxType).First(&previousLog).Error; err != nil || previousLog.CreateTime == 0 {
+			if err := tx.Create(txLog).Error; err != nil {
+				tx.Rollback()
+				return err
+			}
 		}
 	}
 
