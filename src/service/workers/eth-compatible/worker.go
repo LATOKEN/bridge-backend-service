@@ -75,7 +75,7 @@ func NewErc20Worker(logger *logrus.Logger, cfg *models.WorkerConfig, db *storage
 
 	chainid, err := client.ChainID(context.Background())
 	if err != nil {
-		panic(fmt.Sprintf("rpc not returning chain id for %s", cfg.ChainName))
+		panic(fmt.Sprintf("failed to get chain id for %s, with error: %s", cfg.ChainName, err))
 	}
 
 	// init token addresses
