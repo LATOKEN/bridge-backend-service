@@ -40,7 +40,7 @@ type ERC20HandlerDepositRecord struct {
 
 // EthHandlerMetaData contains all meta data concerning the EthHandler contract.
 var EthHandlerMetaData = &bind.MetaData{
-	ABI: "[{\"name\":\"_bridgeAddress\",\"type\":\"function\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"name\":\"_resourceIDToTokenContractAddress\",\"type\":\"function\",\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"name\":\"_contractWhitelist\",\"type\":\"function\",\"inputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"name\":\"_burnList\",\"type\":\"function\",\"inputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"name\":\"setResource\",\"type\":\"function\",\"inputs\":[{\"name\":\"resourceID\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"contractAddress\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"setBurnable\",\"type\":\"function\",\"inputs\":[{\"name\":\"contractAddress\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"_isInitialised\",\"type\":\"function\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"name\":\"ownableInit\",\"type\":\"function\",\"inputs\":[{\"name\":\"owner_\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"owner\",\"type\":\"function\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"name\":\"renounceOwnership\",\"type\":\"function\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"transferOwnership\",\"type\":\"function\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"implementation\",\"type\":\"function\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"name\":\"_dexAddress\",\"type\":\"function\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"name\":\"_WETH\",\"type\":\"function\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"name\":\"_depositRecords\",\"type\":\"function\",\"inputs\":[{\"name\":\"\",\"type\":\"bytes8\",\"internalType\":\"bytes8\"},{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structERC20Handler.DepositRecord\",\"components\":[{\"name\":\"_tokenAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_destinationChainID\",\"type\":\"bytes8\",\"internalType\":\"bytes8\"},{\"name\":\"_resourceID\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"_destinationRecipientAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_depositer\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"stateMutability\":\"view\"},{\"name\":\"initialise\",\"type\":\"function\",\"inputs\":[{\"name\":\"initBridgeAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"initDEXAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"initWETHAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"ownerAddress\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"adminChangeBridgeAddress\",\"type\":\"function\",\"inputs\":[{\"name\":\"newBridgeAddress\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"adminChangeDEXAddress\",\"type\":\"function\",\"inputs\":[{\"name\":\"newDEX\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"adminChangeWETHAddress\",\"type\":\"function\",\"inputs\":[{\"name\":\"newWETH\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"getDepositRecord\",\"type\":\"function\",\"inputs\":[{\"name\":\"depositNonce\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"destId\",\"type\":\"bytes8\",\"internalType\":\"bytes8\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structERC20Handler.DepositRecord\",\"components\":[{\"name\":\"_tokenAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_destinationChainID\",\"type\":\"bytes8\",\"internalType\":\"bytes8\"},{\"name\":\"_resourceID\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"_destinationRecipientAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_depositer\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"stateMutability\":\"view\"},{\"name\":\"deposit\",\"type\":\"function\",\"inputs\":[{\"name\":\"resourceID\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"destinationChainID\",\"type\":\"bytes8\",\"internalType\":\"bytes8\"},{\"name\":\"depositNonce\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"depositer\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"recipientAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"params\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"nonpayable\"},{\"name\":\"executeProposal\",\"type\":\"function\",\"inputs\":[{\"name\":\"resourceID\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"recipientAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"params\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"withdraw\",\"type\":\"function\",\"inputs\":[{\"name\":\"tokenAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"recipient\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"approve\",\"type\":\"function\",\"inputs\":[{\"name\":\"resourceID\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"spender\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"name\":\"transferExtraLA\",\"type\":\"function\",\"inputs\":[{\"name\":\"resourceID\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"recipientAddress\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"nonpayable\"},{\"name\":\"OwnershipTransferred\",\"type\":\"event\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"internalType\":\"address\",\"indexed\":true},{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\",\"indexed\":true}],\"anonymous\":false}]",
+	ABI: "[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"_bridgeAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_burnList\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_contractWhitelist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes8\",\"name\":\"\",\"type\":\"bytes8\"},{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"name\":\"_depositRecords\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"internalType\":\"bytes8\",\"name\":\"_destinationChainID\",\"type\":\"bytes8\"},{\"internalType\":\"bytes32\",\"name\":\"_resourceID\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"_destinationRecipientAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_depositer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"_isInitialised\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"_minDeposits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"_resourceIDToTokenContractAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_tokenContractAddressToResourceID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newBridgeAddress\",\"type\":\"address\"}],\"name\":\"adminChangeBridgeAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"resourceID\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"resourceID\",\"type\":\"bytes32\"},{\"internalType\":\"bytes8\",\"name\":\"destinationChainID\",\"type\":\"bytes8\"},{\"internalType\":\"uint64\",\"name\":\"depositNonce\",\"type\":\"uint64\"},{\"internalType\":\"address\",\"name\":\"depositer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"recipientAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"params\",\"type\":\"bytes\"}],\"name\":\"deposit\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"depositFunds\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"resourceID\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"recipientAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"params\",\"type\":\"bytes\"}],\"name\":\"executeProposal\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"fundERC20\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"resourceID\",\"type\":\"bytes32\"}],\"name\":\"getAddressFromResourceId\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"depositNonce\",\"type\":\"uint64\"},{\"internalType\":\"bytes8\",\"name\":\"destId\",\"type\":\"bytes8\"}],\"name\":\"getDepositRecord\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"internalType\":\"bytes8\",\"name\":\"_destinationChainID\",\"type\":\"bytes8\"},{\"internalType\":\"bytes32\",\"name\":\"_resourceID\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"_destinationRecipientAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_depositer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"internalType\":\"structERC20Handler.DepositRecord\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"resourceID\",\"type\":\"bytes32\"}],\"name\":\"getMinDeposits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"bridgeAddress\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ownableInit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"setBurnable\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"resourceID\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"minAmount\",\"type\":\"uint256\"}],\"name\":\"setMinDeposits\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"resourceID\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"contractAddress\",\"type\":\"address\"}],\"name\":\"setResource\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // EthHandlerABI is the input ABI used to generate the binding from.
@@ -189,37 +189,6 @@ func (_EthHandler *EthHandlerTransactorRaw) Transact(opts *bind.TransactOpts, me
 	return _EthHandler.Contract.contract.Transact(opts, method, params...)
 }
 
-// WETH is a free data retrieval call binding the contract method 0xe0af3616.
-//
-// Solidity: function _WETH() view returns(address)
-func (_EthHandler *EthHandlerCaller) WETH(opts *bind.CallOpts) (common.Address, error) {
-	var out []interface{}
-	err := _EthHandler.contract.Call(opts, &out, "_WETH")
-
-	if err != nil {
-		return *new(common.Address), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
-
-	return out0, err
-
-}
-
-// WETH is a free data retrieval call binding the contract method 0xe0af3616.
-//
-// Solidity: function _WETH() view returns(address)
-func (_EthHandler *EthHandlerSession) WETH() (common.Address, error) {
-	return _EthHandler.Contract.WETH(&_EthHandler.CallOpts)
-}
-
-// WETH is a free data retrieval call binding the contract method 0xe0af3616.
-//
-// Solidity: function _WETH() view returns(address)
-func (_EthHandler *EthHandlerCallerSession) WETH() (common.Address, error) {
-	return _EthHandler.Contract.WETH(&_EthHandler.CallOpts)
-}
-
 // BridgeAddress is a free data retrieval call binding the contract method 0x318c136e.
 //
 // Solidity: function _bridgeAddress() view returns(address)
@@ -315,64 +284,67 @@ func (_EthHandler *EthHandlerCallerSession) ContractWhitelist(arg0 common.Addres
 
 // DepositRecords is a free data retrieval call binding the contract method 0x78f6a94c.
 //
-// Solidity: function _depositRecords(bytes8 , uint64 ) view returns((address,bytes8,bytes32,address,address,uint256))
-func (_EthHandler *EthHandlerCaller) DepositRecords(opts *bind.CallOpts, arg0 [8]byte, arg1 uint64) (ERC20HandlerDepositRecord, error) {
+// Solidity: function _depositRecords(bytes8 , uint64 ) view returns(address _tokenAddress, bytes8 _destinationChainID, bytes32 _resourceID, address _destinationRecipientAddress, address _depositer, uint256 _amount)
+func (_EthHandler *EthHandlerCaller) DepositRecords(opts *bind.CallOpts, arg0 [8]byte, arg1 uint64) (struct {
+	TokenAddress                common.Address
+	DestinationChainID          [8]byte
+	ResourceID                  [32]byte
+	DestinationRecipientAddress common.Address
+	Depositer                   common.Address
+	Amount                      *big.Int
+}, error) {
 	var out []interface{}
 	err := _EthHandler.contract.Call(opts, &out, "_depositRecords", arg0, arg1)
 
+	outstruct := new(struct {
+		TokenAddress                common.Address
+		DestinationChainID          [8]byte
+		ResourceID                  [32]byte
+		DestinationRecipientAddress common.Address
+		Depositer                   common.Address
+		Amount                      *big.Int
+	})
 	if err != nil {
-		return *new(ERC20HandlerDepositRecord), err
+		return *outstruct, err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(ERC20HandlerDepositRecord)).(*ERC20HandlerDepositRecord)
+	outstruct.TokenAddress = *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+	outstruct.DestinationChainID = *abi.ConvertType(out[1], new([8]byte)).(*[8]byte)
+	outstruct.ResourceID = *abi.ConvertType(out[2], new([32]byte)).(*[32]byte)
+	outstruct.DestinationRecipientAddress = *abi.ConvertType(out[3], new(common.Address)).(*common.Address)
+	outstruct.Depositer = *abi.ConvertType(out[4], new(common.Address)).(*common.Address)
+	outstruct.Amount = *abi.ConvertType(out[5], new(*big.Int)).(**big.Int)
 
-	return out0, err
+	return *outstruct, err
 
 }
 
 // DepositRecords is a free data retrieval call binding the contract method 0x78f6a94c.
 //
-// Solidity: function _depositRecords(bytes8 , uint64 ) view returns((address,bytes8,bytes32,address,address,uint256))
-func (_EthHandler *EthHandlerSession) DepositRecords(arg0 [8]byte, arg1 uint64) (ERC20HandlerDepositRecord, error) {
+// Solidity: function _depositRecords(bytes8 , uint64 ) view returns(address _tokenAddress, bytes8 _destinationChainID, bytes32 _resourceID, address _destinationRecipientAddress, address _depositer, uint256 _amount)
+func (_EthHandler *EthHandlerSession) DepositRecords(arg0 [8]byte, arg1 uint64) (struct {
+	TokenAddress                common.Address
+	DestinationChainID          [8]byte
+	ResourceID                  [32]byte
+	DestinationRecipientAddress common.Address
+	Depositer                   common.Address
+	Amount                      *big.Int
+}, error) {
 	return _EthHandler.Contract.DepositRecords(&_EthHandler.CallOpts, arg0, arg1)
 }
 
 // DepositRecords is a free data retrieval call binding the contract method 0x78f6a94c.
 //
-// Solidity: function _depositRecords(bytes8 , uint64 ) view returns((address,bytes8,bytes32,address,address,uint256))
-func (_EthHandler *EthHandlerCallerSession) DepositRecords(arg0 [8]byte, arg1 uint64) (ERC20HandlerDepositRecord, error) {
+// Solidity: function _depositRecords(bytes8 , uint64 ) view returns(address _tokenAddress, bytes8 _destinationChainID, bytes32 _resourceID, address _destinationRecipientAddress, address _depositer, uint256 _amount)
+func (_EthHandler *EthHandlerCallerSession) DepositRecords(arg0 [8]byte, arg1 uint64) (struct {
+	TokenAddress                common.Address
+	DestinationChainID          [8]byte
+	ResourceID                  [32]byte
+	DestinationRecipientAddress common.Address
+	Depositer                   common.Address
+	Amount                      *big.Int
+}, error) {
 	return _EthHandler.Contract.DepositRecords(&_EthHandler.CallOpts, arg0, arg1)
-}
-
-// DexAddress is a free data retrieval call binding the contract method 0x98bdd27a.
-//
-// Solidity: function _dexAddress() view returns(address)
-func (_EthHandler *EthHandlerCaller) DexAddress(opts *bind.CallOpts) (common.Address, error) {
-	var out []interface{}
-	err := _EthHandler.contract.Call(opts, &out, "_dexAddress")
-
-	if err != nil {
-		return *new(common.Address), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
-
-	return out0, err
-
-}
-
-// DexAddress is a free data retrieval call binding the contract method 0x98bdd27a.
-//
-// Solidity: function _dexAddress() view returns(address)
-func (_EthHandler *EthHandlerSession) DexAddress() (common.Address, error) {
-	return _EthHandler.Contract.DexAddress(&_EthHandler.CallOpts)
-}
-
-// DexAddress is a free data retrieval call binding the contract method 0x98bdd27a.
-//
-// Solidity: function _dexAddress() view returns(address)
-func (_EthHandler *EthHandlerCallerSession) DexAddress() (common.Address, error) {
-	return _EthHandler.Contract.DexAddress(&_EthHandler.CallOpts)
 }
 
 // IsInitialised is a free data retrieval call binding the contract method 0xdd2e8ec3.
@@ -406,6 +378,37 @@ func (_EthHandler *EthHandlerCallerSession) IsInitialised() (bool, error) {
 	return _EthHandler.Contract.IsInitialised(&_EthHandler.CallOpts)
 }
 
+// MinDeposits is a free data retrieval call binding the contract method 0xd90445ca.
+//
+// Solidity: function _minDeposits(bytes32 ) view returns(uint256)
+func (_EthHandler *EthHandlerCaller) MinDeposits(opts *bind.CallOpts, arg0 [32]byte) (*big.Int, error) {
+	var out []interface{}
+	err := _EthHandler.contract.Call(opts, &out, "_minDeposits", arg0)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// MinDeposits is a free data retrieval call binding the contract method 0xd90445ca.
+//
+// Solidity: function _minDeposits(bytes32 ) view returns(uint256)
+func (_EthHandler *EthHandlerSession) MinDeposits(arg0 [32]byte) (*big.Int, error) {
+	return _EthHandler.Contract.MinDeposits(&_EthHandler.CallOpts, arg0)
+}
+
+// MinDeposits is a free data retrieval call binding the contract method 0xd90445ca.
+//
+// Solidity: function _minDeposits(bytes32 ) view returns(uint256)
+func (_EthHandler *EthHandlerCallerSession) MinDeposits(arg0 [32]byte) (*big.Int, error) {
+	return _EthHandler.Contract.MinDeposits(&_EthHandler.CallOpts, arg0)
+}
+
 // ResourceIDToTokenContractAddress is a free data retrieval call binding the contract method 0x0a6d55d8.
 //
 // Solidity: function _resourceIDToTokenContractAddress(bytes32 ) view returns(address)
@@ -435,6 +438,68 @@ func (_EthHandler *EthHandlerSession) ResourceIDToTokenContractAddress(arg0 [32]
 // Solidity: function _resourceIDToTokenContractAddress(bytes32 ) view returns(address)
 func (_EthHandler *EthHandlerCallerSession) ResourceIDToTokenContractAddress(arg0 [32]byte) (common.Address, error) {
 	return _EthHandler.Contract.ResourceIDToTokenContractAddress(&_EthHandler.CallOpts, arg0)
+}
+
+// TokenContractAddressToResourceID is a free data retrieval call binding the contract method 0xc8ba6c87.
+//
+// Solidity: function _tokenContractAddressToResourceID(address ) view returns(bytes32)
+func (_EthHandler *EthHandlerCaller) TokenContractAddressToResourceID(opts *bind.CallOpts, arg0 common.Address) ([32]byte, error) {
+	var out []interface{}
+	err := _EthHandler.contract.Call(opts, &out, "_tokenContractAddressToResourceID", arg0)
+
+	if err != nil {
+		return *new([32]byte), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+
+	return out0, err
+
+}
+
+// TokenContractAddressToResourceID is a free data retrieval call binding the contract method 0xc8ba6c87.
+//
+// Solidity: function _tokenContractAddressToResourceID(address ) view returns(bytes32)
+func (_EthHandler *EthHandlerSession) TokenContractAddressToResourceID(arg0 common.Address) ([32]byte, error) {
+	return _EthHandler.Contract.TokenContractAddressToResourceID(&_EthHandler.CallOpts, arg0)
+}
+
+// TokenContractAddressToResourceID is a free data retrieval call binding the contract method 0xc8ba6c87.
+//
+// Solidity: function _tokenContractAddressToResourceID(address ) view returns(bytes32)
+func (_EthHandler *EthHandlerCallerSession) TokenContractAddressToResourceID(arg0 common.Address) ([32]byte, error) {
+	return _EthHandler.Contract.TokenContractAddressToResourceID(&_EthHandler.CallOpts, arg0)
+}
+
+// GetAddressFromResourceId is a free data retrieval call binding the contract method 0xa7a3fb40.
+//
+// Solidity: function getAddressFromResourceId(bytes32 resourceID) view returns(address)
+func (_EthHandler *EthHandlerCaller) GetAddressFromResourceId(opts *bind.CallOpts, resourceID [32]byte) (common.Address, error) {
+	var out []interface{}
+	err := _EthHandler.contract.Call(opts, &out, "getAddressFromResourceId", resourceID)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// GetAddressFromResourceId is a free data retrieval call binding the contract method 0xa7a3fb40.
+//
+// Solidity: function getAddressFromResourceId(bytes32 resourceID) view returns(address)
+func (_EthHandler *EthHandlerSession) GetAddressFromResourceId(resourceID [32]byte) (common.Address, error) {
+	return _EthHandler.Contract.GetAddressFromResourceId(&_EthHandler.CallOpts, resourceID)
+}
+
+// GetAddressFromResourceId is a free data retrieval call binding the contract method 0xa7a3fb40.
+//
+// Solidity: function getAddressFromResourceId(bytes32 resourceID) view returns(address)
+func (_EthHandler *EthHandlerCallerSession) GetAddressFromResourceId(resourceID [32]byte) (common.Address, error) {
+	return _EthHandler.Contract.GetAddressFromResourceId(&_EthHandler.CallOpts, resourceID)
 }
 
 // GetDepositRecord is a free data retrieval call binding the contract method 0x34143cd7.
@@ -468,35 +533,35 @@ func (_EthHandler *EthHandlerCallerSession) GetDepositRecord(depositNonce uint64
 	return _EthHandler.Contract.GetDepositRecord(&_EthHandler.CallOpts, depositNonce, destId)
 }
 
-// Implementation is a free data retrieval call binding the contract method 0x5c60da1b.
+// GetMinDeposits is a free data retrieval call binding the contract method 0x27e4b2f7.
 //
-// Solidity: function implementation() view returns(address)
-func (_EthHandler *EthHandlerCaller) Implementation(opts *bind.CallOpts) (common.Address, error) {
+// Solidity: function getMinDeposits(bytes32 resourceID) view returns(uint256)
+func (_EthHandler *EthHandlerCaller) GetMinDeposits(opts *bind.CallOpts, resourceID [32]byte) (*big.Int, error) {
 	var out []interface{}
-	err := _EthHandler.contract.Call(opts, &out, "implementation")
+	err := _EthHandler.contract.Call(opts, &out, "getMinDeposits", resourceID)
 
 	if err != nil {
-		return *new(common.Address), err
+		return *new(*big.Int), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
 
 	return out0, err
 
 }
 
-// Implementation is a free data retrieval call binding the contract method 0x5c60da1b.
+// GetMinDeposits is a free data retrieval call binding the contract method 0x27e4b2f7.
 //
-// Solidity: function implementation() view returns(address)
-func (_EthHandler *EthHandlerSession) Implementation() (common.Address, error) {
-	return _EthHandler.Contract.Implementation(&_EthHandler.CallOpts)
+// Solidity: function getMinDeposits(bytes32 resourceID) view returns(uint256)
+func (_EthHandler *EthHandlerSession) GetMinDeposits(resourceID [32]byte) (*big.Int, error) {
+	return _EthHandler.Contract.GetMinDeposits(&_EthHandler.CallOpts, resourceID)
 }
 
-// Implementation is a free data retrieval call binding the contract method 0x5c60da1b.
+// GetMinDeposits is a free data retrieval call binding the contract method 0x27e4b2f7.
 //
-// Solidity: function implementation() view returns(address)
-func (_EthHandler *EthHandlerCallerSession) Implementation() (common.Address, error) {
-	return _EthHandler.Contract.Implementation(&_EthHandler.CallOpts)
+// Solidity: function getMinDeposits(bytes32 resourceID) view returns(uint256)
+func (_EthHandler *EthHandlerCallerSession) GetMinDeposits(resourceID [32]byte) (*big.Int, error) {
+	return _EthHandler.Contract.GetMinDeposits(&_EthHandler.CallOpts, resourceID)
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
@@ -551,48 +616,6 @@ func (_EthHandler *EthHandlerTransactorSession) AdminChangeBridgeAddress(newBrid
 	return _EthHandler.Contract.AdminChangeBridgeAddress(&_EthHandler.TransactOpts, newBridgeAddress)
 }
 
-// AdminChangeDEXAddress is a paid mutator transaction binding the contract method 0x311e0c67.
-//
-// Solidity: function adminChangeDEXAddress(address newDEX) returns()
-func (_EthHandler *EthHandlerTransactor) AdminChangeDEXAddress(opts *bind.TransactOpts, newDEX common.Address) (*types.Transaction, error) {
-	return _EthHandler.contract.Transact(opts, "adminChangeDEXAddress", newDEX)
-}
-
-// AdminChangeDEXAddress is a paid mutator transaction binding the contract method 0x311e0c67.
-//
-// Solidity: function adminChangeDEXAddress(address newDEX) returns()
-func (_EthHandler *EthHandlerSession) AdminChangeDEXAddress(newDEX common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.AdminChangeDEXAddress(&_EthHandler.TransactOpts, newDEX)
-}
-
-// AdminChangeDEXAddress is a paid mutator transaction binding the contract method 0x311e0c67.
-//
-// Solidity: function adminChangeDEXAddress(address newDEX) returns()
-func (_EthHandler *EthHandlerTransactorSession) AdminChangeDEXAddress(newDEX common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.AdminChangeDEXAddress(&_EthHandler.TransactOpts, newDEX)
-}
-
-// AdminChangeWETHAddress is a paid mutator transaction binding the contract method 0xf6eb24fa.
-//
-// Solidity: function adminChangeWETHAddress(address newWETH) returns()
-func (_EthHandler *EthHandlerTransactor) AdminChangeWETHAddress(opts *bind.TransactOpts, newWETH common.Address) (*types.Transaction, error) {
-	return _EthHandler.contract.Transact(opts, "adminChangeWETHAddress", newWETH)
-}
-
-// AdminChangeWETHAddress is a paid mutator transaction binding the contract method 0xf6eb24fa.
-//
-// Solidity: function adminChangeWETHAddress(address newWETH) returns()
-func (_EthHandler *EthHandlerSession) AdminChangeWETHAddress(newWETH common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.AdminChangeWETHAddress(&_EthHandler.TransactOpts, newWETH)
-}
-
-// AdminChangeWETHAddress is a paid mutator transaction binding the contract method 0xf6eb24fa.
-//
-// Solidity: function adminChangeWETHAddress(address newWETH) returns()
-func (_EthHandler *EthHandlerTransactorSession) AdminChangeWETHAddress(newWETH common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.AdminChangeWETHAddress(&_EthHandler.TransactOpts, newWETH)
-}
-
 // Approve is a paid mutator transaction binding the contract method 0xbf1ed1eb.
 //
 // Solidity: function approve(bytes32 resourceID, address spender, uint256 amount) returns()
@@ -635,67 +658,109 @@ func (_EthHandler *EthHandlerTransactorSession) Deposit(resourceID [32]byte, des
 	return _EthHandler.Contract.Deposit(&_EthHandler.TransactOpts, resourceID, destinationChainID, depositNonce, depositer, recipientAddress, amount, params)
 }
 
+// DepositFunds is a paid mutator transaction binding the contract method 0xe2c41dbc.
+//
+// Solidity: function depositFunds() payable returns()
+func (_EthHandler *EthHandlerTransactor) DepositFunds(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _EthHandler.contract.Transact(opts, "depositFunds")
+}
+
+// DepositFunds is a paid mutator transaction binding the contract method 0xe2c41dbc.
+//
+// Solidity: function depositFunds() payable returns()
+func (_EthHandler *EthHandlerSession) DepositFunds() (*types.Transaction, error) {
+	return _EthHandler.Contract.DepositFunds(&_EthHandler.TransactOpts)
+}
+
+// DepositFunds is a paid mutator transaction binding the contract method 0xe2c41dbc.
+//
+// Solidity: function depositFunds() payable returns()
+func (_EthHandler *EthHandlerTransactorSession) DepositFunds() (*types.Transaction, error) {
+	return _EthHandler.Contract.DepositFunds(&_EthHandler.TransactOpts)
+}
+
 // ExecuteProposal is a paid mutator transaction binding the contract method 0x728e218f.
 //
-// Solidity: function executeProposal(bytes32 resourceID, address recipientAddress, uint256 amount, bytes params) returns()
+// Solidity: function executeProposal(bytes32 resourceID, address recipientAddress, uint256 amount, bytes params) returns(uint256)
 func (_EthHandler *EthHandlerTransactor) ExecuteProposal(opts *bind.TransactOpts, resourceID [32]byte, recipientAddress common.Address, amount *big.Int, params []byte) (*types.Transaction, error) {
 	return _EthHandler.contract.Transact(opts, "executeProposal", resourceID, recipientAddress, amount, params)
 }
 
 // ExecuteProposal is a paid mutator transaction binding the contract method 0x728e218f.
 //
-// Solidity: function executeProposal(bytes32 resourceID, address recipientAddress, uint256 amount, bytes params) returns()
+// Solidity: function executeProposal(bytes32 resourceID, address recipientAddress, uint256 amount, bytes params) returns(uint256)
 func (_EthHandler *EthHandlerSession) ExecuteProposal(resourceID [32]byte, recipientAddress common.Address, amount *big.Int, params []byte) (*types.Transaction, error) {
 	return _EthHandler.Contract.ExecuteProposal(&_EthHandler.TransactOpts, resourceID, recipientAddress, amount, params)
 }
 
 // ExecuteProposal is a paid mutator transaction binding the contract method 0x728e218f.
 //
-// Solidity: function executeProposal(bytes32 resourceID, address recipientAddress, uint256 amount, bytes params) returns()
+// Solidity: function executeProposal(bytes32 resourceID, address recipientAddress, uint256 amount, bytes params) returns(uint256)
 func (_EthHandler *EthHandlerTransactorSession) ExecuteProposal(resourceID [32]byte, recipientAddress common.Address, amount *big.Int, params []byte) (*types.Transaction, error) {
 	return _EthHandler.Contract.ExecuteProposal(&_EthHandler.TransactOpts, resourceID, recipientAddress, amount, params)
 }
 
-// Initialise is a paid mutator transaction binding the contract method 0x994731da.
+// FundERC20 is a paid mutator transaction binding the contract method 0x95601f09.
 //
-// Solidity: function initialise(address initBridgeAddress, address initDEXAddress, address initWETHAddress, address ownerAddress) returns()
-func (_EthHandler *EthHandlerTransactor) Initialise(opts *bind.TransactOpts, initBridgeAddress common.Address, initDEXAddress common.Address, initWETHAddress common.Address, ownerAddress common.Address) (*types.Transaction, error) {
-	return _EthHandler.contract.Transact(opts, "initialise", initBridgeAddress, initDEXAddress, initWETHAddress, ownerAddress)
+// Solidity: function fundERC20(address tokenAddress, address owner, uint256 amount) returns()
+func (_EthHandler *EthHandlerTransactor) FundERC20(opts *bind.TransactOpts, tokenAddress common.Address, owner common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _EthHandler.contract.Transact(opts, "fundERC20", tokenAddress, owner, amount)
 }
 
-// Initialise is a paid mutator transaction binding the contract method 0x994731da.
+// FundERC20 is a paid mutator transaction binding the contract method 0x95601f09.
 //
-// Solidity: function initialise(address initBridgeAddress, address initDEXAddress, address initWETHAddress, address ownerAddress) returns()
-func (_EthHandler *EthHandlerSession) Initialise(initBridgeAddress common.Address, initDEXAddress common.Address, initWETHAddress common.Address, ownerAddress common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.Initialise(&_EthHandler.TransactOpts, initBridgeAddress, initDEXAddress, initWETHAddress, ownerAddress)
+// Solidity: function fundERC20(address tokenAddress, address owner, uint256 amount) returns()
+func (_EthHandler *EthHandlerSession) FundERC20(tokenAddress common.Address, owner common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _EthHandler.Contract.FundERC20(&_EthHandler.TransactOpts, tokenAddress, owner, amount)
 }
 
-// Initialise is a paid mutator transaction binding the contract method 0x994731da.
+// FundERC20 is a paid mutator transaction binding the contract method 0x95601f09.
 //
-// Solidity: function initialise(address initBridgeAddress, address initDEXAddress, address initWETHAddress, address ownerAddress) returns()
-func (_EthHandler *EthHandlerTransactorSession) Initialise(initBridgeAddress common.Address, initDEXAddress common.Address, initWETHAddress common.Address, ownerAddress common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.Initialise(&_EthHandler.TransactOpts, initBridgeAddress, initDEXAddress, initWETHAddress, ownerAddress)
+// Solidity: function fundERC20(address tokenAddress, address owner, uint256 amount) returns()
+func (_EthHandler *EthHandlerTransactorSession) FundERC20(tokenAddress common.Address, owner common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _EthHandler.Contract.FundERC20(&_EthHandler.TransactOpts, tokenAddress, owner, amount)
+}
+
+// Initialize is a paid mutator transaction binding the contract method 0xc4d66de8.
+//
+// Solidity: function initialize(address bridgeAddress) returns()
+func (_EthHandler *EthHandlerTransactor) Initialize(opts *bind.TransactOpts, bridgeAddress common.Address) (*types.Transaction, error) {
+	return _EthHandler.contract.Transact(opts, "initialize", bridgeAddress)
+}
+
+// Initialize is a paid mutator transaction binding the contract method 0xc4d66de8.
+//
+// Solidity: function initialize(address bridgeAddress) returns()
+func (_EthHandler *EthHandlerSession) Initialize(bridgeAddress common.Address) (*types.Transaction, error) {
+	return _EthHandler.Contract.Initialize(&_EthHandler.TransactOpts, bridgeAddress)
+}
+
+// Initialize is a paid mutator transaction binding the contract method 0xc4d66de8.
+//
+// Solidity: function initialize(address bridgeAddress) returns()
+func (_EthHandler *EthHandlerTransactorSession) Initialize(bridgeAddress common.Address) (*types.Transaction, error) {
+	return _EthHandler.Contract.Initialize(&_EthHandler.TransactOpts, bridgeAddress)
 }
 
 // OwnableInit is a paid mutator transaction binding the contract method 0xea439b2b.
 //
-// Solidity: function ownableInit(address owner_) returns()
-func (_EthHandler *EthHandlerTransactor) OwnableInit(opts *bind.TransactOpts, owner_ common.Address) (*types.Transaction, error) {
-	return _EthHandler.contract.Transact(opts, "ownableInit", owner_)
+// Solidity: function ownableInit(address owner) returns()
+func (_EthHandler *EthHandlerTransactor) OwnableInit(opts *bind.TransactOpts, owner common.Address) (*types.Transaction, error) {
+	return _EthHandler.contract.Transact(opts, "ownableInit", owner)
 }
 
 // OwnableInit is a paid mutator transaction binding the contract method 0xea439b2b.
 //
-// Solidity: function ownableInit(address owner_) returns()
-func (_EthHandler *EthHandlerSession) OwnableInit(owner_ common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.OwnableInit(&_EthHandler.TransactOpts, owner_)
+// Solidity: function ownableInit(address owner) returns()
+func (_EthHandler *EthHandlerSession) OwnableInit(owner common.Address) (*types.Transaction, error) {
+	return _EthHandler.Contract.OwnableInit(&_EthHandler.TransactOpts, owner)
 }
 
 // OwnableInit is a paid mutator transaction binding the contract method 0xea439b2b.
 //
-// Solidity: function ownableInit(address owner_) returns()
-func (_EthHandler *EthHandlerTransactorSession) OwnableInit(owner_ common.Address) (*types.Transaction, error) {
-	return _EthHandler.Contract.OwnableInit(&_EthHandler.TransactOpts, owner_)
+// Solidity: function ownableInit(address owner) returns()
+func (_EthHandler *EthHandlerTransactorSession) OwnableInit(owner common.Address) (*types.Transaction, error) {
+	return _EthHandler.Contract.OwnableInit(&_EthHandler.TransactOpts, owner)
 }
 
 // RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
@@ -740,6 +805,27 @@ func (_EthHandler *EthHandlerTransactorSession) SetBurnable(contractAddress comm
 	return _EthHandler.Contract.SetBurnable(&_EthHandler.TransactOpts, contractAddress)
 }
 
+// SetMinDeposits is a paid mutator transaction binding the contract method 0x06a6906c.
+//
+// Solidity: function setMinDeposits(bytes32 resourceID, uint256 minAmount) returns()
+func (_EthHandler *EthHandlerTransactor) SetMinDeposits(opts *bind.TransactOpts, resourceID [32]byte, minAmount *big.Int) (*types.Transaction, error) {
+	return _EthHandler.contract.Transact(opts, "setMinDeposits", resourceID, minAmount)
+}
+
+// SetMinDeposits is a paid mutator transaction binding the contract method 0x06a6906c.
+//
+// Solidity: function setMinDeposits(bytes32 resourceID, uint256 minAmount) returns()
+func (_EthHandler *EthHandlerSession) SetMinDeposits(resourceID [32]byte, minAmount *big.Int) (*types.Transaction, error) {
+	return _EthHandler.Contract.SetMinDeposits(&_EthHandler.TransactOpts, resourceID, minAmount)
+}
+
+// SetMinDeposits is a paid mutator transaction binding the contract method 0x06a6906c.
+//
+// Solidity: function setMinDeposits(bytes32 resourceID, uint256 minAmount) returns()
+func (_EthHandler *EthHandlerTransactorSession) SetMinDeposits(resourceID [32]byte, minAmount *big.Int) (*types.Transaction, error) {
+	return _EthHandler.Contract.SetMinDeposits(&_EthHandler.TransactOpts, resourceID, minAmount)
+}
+
 // SetResource is a paid mutator transaction binding the contract method 0xb8fa3736.
 //
 // Solidity: function setResource(bytes32 resourceID, address contractAddress) returns()
@@ -759,27 +845,6 @@ func (_EthHandler *EthHandlerSession) SetResource(resourceID [32]byte, contractA
 // Solidity: function setResource(bytes32 resourceID, address contractAddress) returns()
 func (_EthHandler *EthHandlerTransactorSession) SetResource(resourceID [32]byte, contractAddress common.Address) (*types.Transaction, error) {
 	return _EthHandler.Contract.SetResource(&_EthHandler.TransactOpts, resourceID, contractAddress)
-}
-
-// TransferExtraLA is a paid mutator transaction binding the contract method 0x3b926694.
-//
-// Solidity: function transferExtraLA(bytes32 resourceID, address recipientAddress, uint256 amount) returns(bool)
-func (_EthHandler *EthHandlerTransactor) TransferExtraLA(opts *bind.TransactOpts, resourceID [32]byte, recipientAddress common.Address, amount *big.Int) (*types.Transaction, error) {
-	return _EthHandler.contract.Transact(opts, "transferExtraLA", resourceID, recipientAddress, amount)
-}
-
-// TransferExtraLA is a paid mutator transaction binding the contract method 0x3b926694.
-//
-// Solidity: function transferExtraLA(bytes32 resourceID, address recipientAddress, uint256 amount) returns(bool)
-func (_EthHandler *EthHandlerSession) TransferExtraLA(resourceID [32]byte, recipientAddress common.Address, amount *big.Int) (*types.Transaction, error) {
-	return _EthHandler.Contract.TransferExtraLA(&_EthHandler.TransactOpts, resourceID, recipientAddress, amount)
-}
-
-// TransferExtraLA is a paid mutator transaction binding the contract method 0x3b926694.
-//
-// Solidity: function transferExtraLA(bytes32 resourceID, address recipientAddress, uint256 amount) returns(bool)
-func (_EthHandler *EthHandlerTransactorSession) TransferExtraLA(resourceID [32]byte, recipientAddress common.Address, amount *big.Int) (*types.Transaction, error) {
-	return _EthHandler.Contract.TransferExtraLA(&_EthHandler.TransactOpts, resourceID, recipientAddress, amount)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
